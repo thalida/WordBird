@@ -6,7 +6,8 @@
 	"version": "0.1",
 
 	"permissions": [
-		"activeTab"
+		"activeTab",
+		 "storage"
 	],
 
 	"browser_action": {

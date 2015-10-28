@@ -5,7 +5,7 @@
 var StringReplacer = function( map, config ){
 	if( typeof map !== 'undefined' ){
 		this.wordMap = map;
-    	this.regex = this.createRegex();
+		this.regex = this.createRegex();
 	}
 };
 
@@ -17,14 +17,14 @@ StringReplacer.prototype = {
 	set: function( key, value ){
 		this[key] = value;
 		if( key === 'wordMap' ){
-    		this.regex = this.createRegex();
+			this.regex = this.createRegex();
 		}
 	},
 
 	createRegex: function(){
 		var keysQuery = Object.keys(this.wordMap).join('|');
-    	var regexStr = '\\b(' + keysQuery + ')\\b';
-    	return new RegExp(regexStr, 'gi');
+		var regexStr = '\\b(' + keysQuery + ')\\b';
+		return new RegExp(regexStr, 'gi');
 	},
 
 	walk: function( node ){
@@ -136,7 +136,7 @@ WordBird.prototype = {
 					oldValue: storageData.oldValue
 				});
 			}
-	    }
+		}
 	}
 };
 

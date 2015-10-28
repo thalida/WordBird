@@ -17,10 +17,10 @@ var toggle = {
 
 		chrome.storage.sync.set(storage, function(){
 			if( chrome.runtime.lastError ){
-    			throw Error(chrome.runtime.lastError);
-    		} else {
-    			cb();
-    		}
+				throw Error(chrome.runtime.lastError);
+			} else {
+				cb();
+			}
 		});
 	}
 };
@@ -32,7 +32,7 @@ var icon = {
 	},
 	set: function( state ){
 		var type = ( state ) ? 'on' : 'off';
-    	chrome.browserAction.setIcon({ path: icon.paths[type] });
+		chrome.browserAction.setIcon({ path: icon.paths[type] });
 	}
 };
 

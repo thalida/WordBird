@@ -2,20 +2,23 @@
 // http://stackoverflow.com/questions/5904914/javascript-regex-to-replace-text-not-in-html-attributes/5904945#5904945
 // http://stackoverflow.com/questions/15604140/replace-multiple-strings-with-multiple-other-strings
 
-var StringReplacer = function( map ){
-	console.log( 'word map:', map );
-	this.wordMap = {
-		// 'and': '--and--',
-		// 'of': '((of))',
-		'the': '((the))'
-	};
-
-    this.regex = this.createRegex();
+var StringReplacer = function( map, config ){
+	if( typeof map !== 'undefined' ){
+		this.wordMap = map;
+    	this.regex = this.createRegex();
+	}
 };
 
 StringReplacer.prototype = {
 	run: function( startNode ){
 		this.walk( startNode );
+	},
+
+	set: function( key, value ){
+		this[key] = value;
+		if( key === 'wordMap' ){
+    		this.regex = this.createRegex();
+		}
 	},
 
 	createRegex: function(){
@@ -67,45 +70,74 @@ StringReplacer.prototype = {
 	}
 };
 
-var init = function(){
-	var namespace = 'wordbird__';
-	var wordMapkey = namespace + 'wordMap';
-
-	function getEnabledState( cb ){
-		var key = namespace + 'enabled';
-		chrome.storage.sync.get(key, function( data ){
-			return cb( data[key] );
-		});
-	}
-
-	function getWordMap( cb ){
-		var key = namespace + 'wordMap';
-		chrome.storage.sync.get(key, function( data ){
-			return cb( data[key] );
-		});
-	}
-
-	getEnabledState(function( state ){
-		var isEnabled = state;
-		if( isEnabled ){
-			getWordMap(function(map){
-				new StringReplacer( map ).run( document.body );
-			});
-		}
-	});
+var WordBird = function(){
+	this.strReplacer = new StringReplacer();
+	this.run();
+	chrome.storage.onChanged.addListener( this.onStorageChange.bind(this) );
 };
 
-chrome.storage.onChanged.addListener(function(changes, namespace) {
-	for (var key in changes) {
-    	var storageData = changes[key];
-		if( key === 'wordbird__enabled' ){
-			if( storageData.newValue === true ){
-				init();
-			} else {
-				window.location.reload( false );
+WordBird.prototype = {
+	run: function(){
+		var self = this;
+
+		console.log('in WordBird.run')
+
+		if( this.hasBeenRun === true ){
+			return;
+		}
+
+		self.getFromStorage('isEnabled', function( isEnabled ){
+			if( isEnabled ){
+				self.getFromStorage('wordMap', function( wordMap ){
+					console.log('triggered WordBird');
+					self.hasBeenRun = true;
+					self.strReplacer.set('wordMap', wordMap);
+					self.strReplacer.run( document.body );
+				});
+			}
+		});
+	},
+
+	disable: function(){
+		console.log('WordBird needs to reload');
+		// if( window.confirm('WirdBird needs to refresh') ){
+		// 	window.location.reload( false );
+		// }
+	},
+
+	update: function( opts ){
+		if( opts.trigger === 'onStorageChange' ){
+			if( opts.key === 'isEnabled' ){
+				if( opts.newValue === true ){
+					this.run();
+				} else {
+					this.disable();
+				}
+			} else if( opts.key === 'wordMap' ){
+				this.hasBeenRun = false;
 			}
 		}
-    }
-});
+	},
 
-init();
+	getFromStorage: function( key, cb ){
+		chrome.storage.sync.get(key, function( data ){
+			return cb( data[key] );
+		});
+	},
+
+	onStorageChange: function(changes, namespace) {
+		for (var key in changes) {
+			var storageData = changes[key];
+			if( key === 'isEnabled' || key === 'wordMap' ){
+				this.update({
+					trigger: 'onStorageChange',
+					key: key,
+					newValue: storageData.newValue,
+					oldValue: storageData.oldValue
+				});
+			}
+	    }
+	}
+};
+
+new WordBird();

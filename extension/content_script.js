@@ -78,21 +78,20 @@ var WordBird = function(){
 
 WordBird.prototype = {
 	run: function(){
-		var self = this;
 
 		if( this.hasBeenRun === true ){
 			return;
 		}
 
-		self.getFromStorage('isEnabled', function( isEnabled ){
+		this.getFromStorage('isEnabled', function( isEnabled ){
 			if( isEnabled ){
-				self.getFromStorage('wordMap', function( wordMap ){
-					self.hasBeenRun = true;
-					self.strReplacer.set('wordMap', wordMap);
-					self.strReplacer.run( document.body );
-				});
+				this.getFromStorage('wordMap', function( wordMap ){
+					this.hasBeenRun = true;
+					this.strReplacer.set('wordMap', wordMap);
+					this.strReplacer.run( document.body );
+				}.bind(this));
 			}
-		});
+		}.bind(this));
 	},
 
 	disable: function(){

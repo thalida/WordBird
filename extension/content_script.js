@@ -80,8 +80,6 @@ WordBird.prototype = {
 	run: function(){
 		var self = this;
 
-		console.log('in WordBird.run')
-
 		if( this.hasBeenRun === true ){
 			return;
 		}
@@ -89,7 +87,6 @@ WordBird.prototype = {
 		self.getFromStorage('isEnabled', function( isEnabled ){
 			if( isEnabled ){
 				self.getFromStorage('wordMap', function( wordMap ){
-					console.log('triggered WordBird');
 					self.hasBeenRun = true;
 					self.strReplacer.set('wordMap', wordMap);
 					self.strReplacer.run( document.body );
@@ -99,7 +96,6 @@ WordBird.prototype = {
 	},
 
 	disable: function(){
-		console.log('WordBird needs to reload');
 		// if( window.confirm('WirdBird needs to refresh') ){
 		// 	window.location.reload( false );
 		// }

@@ -77,20 +77,27 @@ var WordBird = function(){
 };
 
 WordBird.prototype = {
-	run: function(){
+	getStorage: function( key, cb ){
+		chrome.storage.sync.get(key, function( data ){
+			return cb( data[key] );
+		});
+	},
 
+	run: function(){
 		if( this.hasBeenRun === true ){
 			return;
 		}
 
-		this.getFromStorage('isEnabled', function( isEnabled ){
-			if( isEnabled ){
-				this.getFromStorage('wordMap', function( wordMap ){
-					this.hasBeenRun = true;
-					this.strReplacer.set('wordMap', wordMap);
-					this.strReplacer.run( document.body );
-				}.bind(this));
+		this.getStorage('isEnabled', function( isEnabled ){
+			if( isEnabled !== true ){
+				return;
 			}
+
+			this.getStorage('wordMap', function( wordMap ){
+				this.hasBeenRun = true;
+				this.strReplacer.set('wordMap', wordMap);
+				this.strReplacer.run( document.body );
+			}.bind(this));
 		}.bind(this));
 	},
 
@@ -100,36 +107,20 @@ WordBird.prototype = {
 		// }
 	},
 
-	update: function( opts ){
-		if( opts.trigger === 'onStorageChange' ){
-			if( opts.key === 'isEnabled' ){
-				if( opts.newValue === true ){
+	onStorageChange: function(changes, namespace) {
+		for (var key in changes) {
+			var storageData = changes[key];
+			var newValue = storageData.newValue;
+			var oldValue = storageData.oldValue;
+
+			if( key === 'isEnabled' ){
+				if( newValue === true ){
 					this.run();
 				} else {
 					this.disable();
 				}
-			} else if( opts.key === 'wordMap' ){
+			} else if( key === 'wordMap' ){
 				this.hasBeenRun = false;
-			}
-		}
-	},
-
-	getFromStorage: function( key, cb ){
-		chrome.storage.sync.get(key, function( data ){
-			return cb( data[key] );
-		});
-	},
-
-	onStorageChange: function(changes, namespace) {
-		for (var key in changes) {
-			var storageData = changes[key];
-			if( key === 'isEnabled' || key === 'wordMap' ){
-				this.update({
-					trigger: 'onStorageChange',
-					key: key,
-					newValue: storageData.newValue,
-					oldValue: storageData.oldValue
-				});
 			}
 		}
 	}

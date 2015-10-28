@@ -22,6 +22,8 @@
 		"persistent": true
 	},
 
+	"options_page": "options/options.html",
+
 	"content_scripts": [{
 		"matches": ["*://*/*"],
 		"js": ["content_script.js"],

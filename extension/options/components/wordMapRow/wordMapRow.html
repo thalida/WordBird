@@ -1,0 +1,42 @@
+<form name="maprow.form" no-validate class="mapping-item">
+	<input
+		class="js-word-input"
+		type="text"
+		name="word"
+		ng-model="maprow.word.val"
+		ng-keyup="maprow.onEvent($event)"
+		ng-blur="maprow.onEvent($event)"
+		ng-pattern="/^\S*$/"
+		ng-trim="false"
+		placeholder="Type a word"
+		required />
+	->
+	<input
+		type="text"
+		name="replacer"
+		ng-model="maprow.replacer.val"
+		ng-keyup="maprow.onEvent($event)"
+		ng-blur="maprow.onEvent($event)"
+		ng-maxlength="50"
+		placeholder="Replace with..."
+		ng-trim="false"
+		required />
+	<input
+		ng-if="maprow.isCreatorRow === false"
+		type="button"
+		value="remove"
+		ng-click="maprow.remove()" />
+	<br />
+
+	<span ng-show="maprow.word.isValid === false">
+		Word Error:
+		<span ng-show="maprow.form.word.$error.required">Required</span>
+		<span ng-show="maprow.form.word.$error.pattern">Enter one word only</span>
+	</span>
+
+	<span ng-show="maprow.replacer.isValid === false">
+		Replacer Error:
+		<span ng-show="maprow.form.replacer.$error.required">Required</span>
+		<span ng-show="maprow.form.replacer.$error.maxlength">Max 50 characters</span>
+	</span>
+</form>

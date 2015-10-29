@@ -1,8 +1,8 @@
 'use strict';
 
-app.directive('wbWordMapRow',[function(){
+app.directive('wordMapRow',[function(){
 	return {
-		require: '^wbWordMap',
+		require: '^wordMap',
 		restric: 'E',
 		replace: false,
 		scope: {
@@ -10,15 +10,26 @@ app.directive('wbWordMapRow',[function(){
 			replacer: '=?replacer'
 		},
 		template: [
-			'<div class="mapping-item">',
-				'<input type="text" ng-model="word" placeholder="Type a word" />',
+			'<form no-validate class="mapping-item">',
+				'<input type="text" ng-model="word" ng-keyup="onKeyup($event)" placeholder="Type a word" ng-required />',
 				'->',
-				'<input type="text" ng-model="replacer" placeholder="Replace with..." />',
+				'<input type="text" ng-model="replacer" ng-keyup="onKeyup($event)" placeholder="Replace with..." />',
 				'remove',
-			'</div>'
+				'<span ng-show="hasError">{{error}}</span>',
+			'</form>'
 		].join(''),
 		link: function($scope, $el, attrs){
+			var ENTER_KEY = 13;
 
+			var validate = function(){
+
+			};
+
+			$scope.onKeyup = function( e ){
+				if( e.keyCode === ENTER_KEY ){
+					validate();
+				}
+			};
 		}
 	};
 }]);

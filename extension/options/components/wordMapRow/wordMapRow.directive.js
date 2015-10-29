@@ -52,8 +52,6 @@ app.directive('wordMapRow',[function(){
 
 			this.onEvent = function( e ){
 				if( e.type === 'blur' || e.keyCode === ENTER_KEY ){
-					// $el.children('.js-word-input')[0].focus();
-					// console.log( $el.children('.js-word-input')[0] );
 					this.validate( e, e.target.name );
 				}
 			};

@@ -4,6 +4,7 @@ app.controller('mainCtrl', [
 	'$scope',
 	'StorageCollection',
 	function( $scope, StorageCollection ){
+		var isProcessing = false;
 		var storage = new StorageCollection();
 		var defaultWordMap = {
 			'word': 'bird',
@@ -18,8 +19,16 @@ app.controller('mainCtrl', [
 			}
 		});
 
-		$scope.onChange = function( res ){
-			console.log( res );
+		$scope.onUpdate = function( res ){
+			if( isProcessing === true ){
+				return;
+			}
+
+			isProcessing = true;
+
+			storage.set('wordMap', res.newMap).then(function(){
+				isProcessing = false;
+			});
 		};
 	}
 ]);

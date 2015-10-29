@@ -26,7 +26,7 @@ app.directive('wordMap',[function(){
 					this.map[actions.add.key] = actions.add.value;
 				}
 
-				this.changeCB({res: {newMap: this.map, oldMap: oldMap }});
+				this.changeCB({res: {newVal: this.map, oldVal: oldMap }});
 
 				return this.map;
 			};

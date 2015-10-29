@@ -5,7 +5,9 @@
 </head>
 <body>
 	<div ng-controller="mainCtrl">
-		<word-map map="wordMap" on-change="onUpdate(res)"></word-map>
+		<word-map map="wordMap" on-change="onMapUpdate(res)"></word-map>
+		<br /><br />
+		<blacklist list="blacklist" on-change="onBlacklistUpdate(res)"></blacklist>
 	</div>
 
 	<script src="libs/angular.min.js"></script>
@@ -15,5 +17,6 @@
 	<script src="components/storageCollection/storageCollection.service.js"></script>
 	<script src="components/wordMap/wordMap.directive.js"></script>
 	<script src="components/wordMapRow/wordMapRow.directive.js"></script>
+	<script src="components/blacklist/blacklist.directive.js"></script>
 </body>
 </html>

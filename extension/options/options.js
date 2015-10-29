@@ -6,29 +6,33 @@ app.controller('mainCtrl', [
 	function( $scope, StorageCollection ){
 		var isProcessing = false;
 		var storage = new StorageCollection();
-		var defaultWordMap = {
-			'word': 'bird',
-			'bird': 'flippity flappity'
-		};
 
 		storage.add({
 			key: 'wordMap',
-			defaultTo: defaultWordMap,
-			onChange: function( newWordMap ){
-				$scope.wordMap = newWordMap;
+			defaultTo: {
+				'word': 'bird',
+				'bird': 'flippity flappity'
+			},
+			onChange: function( wordMap ){
+				$scope.wordMap = wordMap;
 			}
 		});
 
-		$scope.onUpdate = function( res ){
-			if( isProcessing === true ){
-				return;
+		storage.add({
+			key: 'blacklist',
+			defaultTo: [],
+			onChange: function( blacklist ){
+				$scope.blacklist = blacklist;
 			}
+		});
 
-			isProcessing = true;
+		$scope.onMapUpdate = function( map ){
+			storage.set('wordMap', map.newVal);
+		};
 
-			storage.set('wordMap', res.newMap).then(function(){
-				isProcessing = false;
-			});
+		$scope.onBlacklistUpdate = function( list ){
+			console.log( list );
+			storage.set('blacklist', list.newVal);
 		};
 	}
 ]);

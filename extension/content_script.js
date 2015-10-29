@@ -3,6 +3,7 @@
 // http://stackoverflow.com/questions/15604140/replace-multiple-strings-with-multiple-other-strings
 
 var StringReplacer = function( map, config ){
+	this.touchedNodes = [];
 	this.set('wordMap', map);
 };
 
@@ -106,19 +107,7 @@ WordBird.prototype = {
 		}
 
 		this.isProcessing = true;
-
-		this.getStorage('isEnabled', function( isEnabled ){
-			if( isEnabled !== true ){
-				this.isProcessing = false;
-				return;
-			}
-
-			this.getStorage('wordMap', function( wordMap ){
-				this.strReplacer.set('wordMap', wordMap);
-				this.strReplacer.run( document.body );
-				this.isProcessing = false;
-			}.bind(this));
-		}.bind(this));
+		this.getStorage('isEnabled', this.onGetEnabled.bind(this));
 	},
 
 	reset: function(){
@@ -139,6 +128,43 @@ WordBird.prototype = {
 		this.isProcessing = false;
 	},
 
+	onGetEnabled: function( isEnabled ){
+		if( isEnabled !== true ){
+			this.isProcessing = false;
+			return;
+		}
+
+		this.getStorage('blacklist', this.onGetBlacklist.bind(this));
+	},
+
+	onGetBlacklist: function( blacklist ){
+		var currUrl = window.location.href;
+		var totalBlacklist = blacklist.length;
+		var isBlacklisted = false;
+
+		for(var i = 0; i < totalBlacklist; i += 1 ){
+			var url = blacklist[i];
+			console.log( url, currUrl, currUrl.indexOf( url ) >= 0 );
+			if( currUrl.indexOf( url ) >= 0 ){
+				isBlacklisted = true;
+				break;
+			}
+		}
+
+		if( isBlacklisted ){
+			this.isProcessing = false;
+			return;
+		}
+
+		this.getStorage('wordMap', this.onGetWordMap.bind(this));
+	},
+
+	onGetWordMap: function( wordMap ){
+		this.strReplacer.set('wordMap', wordMap);
+		this.strReplacer.run( document.body );
+		this.isProcessing = false;
+	},
+
 	onStorageChange: function(changes, namespace) {
 		for( var key in changes ){
 			var storageData = changes[key];
@@ -149,7 +175,7 @@ WordBird.prototype = {
 				} else {
 					this.reset();
 				}
-			} else if( key === 'wordMap' ){
+			} else if( key === 'wordMap' || key === 'blacklist' ){
 				this.reset();
 				this.run();
 			}

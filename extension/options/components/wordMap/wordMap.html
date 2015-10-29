@@ -1,0 +1,6 @@
+<div class="mapping">
+	<word-map:row creator on-change="wordmap.onChange( actions )"></word-map:row>
+	<div ng-repeat="(word, replacer) in wordmap.map">
+		<word-map:row word="{{word}}" replacer="{{replacer}}" on-change="wordmap.onChange( actions )"></word-map:row>
+	</div>
+</div>

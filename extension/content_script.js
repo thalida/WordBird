@@ -144,7 +144,6 @@ WordBird.prototype = {
 
 		for(var i = 0; i < totalBlacklist; i += 1 ){
 			var url = blacklist[i];
-			console.log( url, currUrl, currUrl.indexOf( url ) >= 0 );
 			if( currUrl.indexOf( url ) >= 0 ){
 				isBlacklisted = true;
 				break;

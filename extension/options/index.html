@@ -3,12 +3,11 @@
 <head>
 	<title>WordBird Settings</title>
 	<link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" type="text/css" href="app.css">
 </head>
 <body>
 	<div class="app" ng-controller="mainCtrl">
 		<div class="app-header">
-			<div class="logo"><img src="assets/images/logo.svg" /></div>
+			<div class="logo"><img src="images/logo.svg" /></div>
 			<div class="name">
 				<span class="weight-thin">WordBird</span> <span class="weight-regular">Options</span>
 			</div>
@@ -17,13 +16,6 @@
 		<blacklist list="blacklist" on-change="onBlacklistUpdate(res)"></blacklist>
 	</div>
 
-	<script src="libs/angular.min.js"></script>
-
-	<script src="app.js"></script>
-	<script src="components/storageItem/storageItem.service.js"></script>
-	<script src="components/storageCollection/storageCollection.service.js"></script>
-	<script src="components/wordMap/wordMap.directive.js"></script>
-	<script src="components/wordMapRow/wordMapRow.directive.js"></script>
-	<script src="components/blacklist/blacklist.directive.js"></script>
+	<script src="bundle/bundle.js"></script>
 </body>
 </html>

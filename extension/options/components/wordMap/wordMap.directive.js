@@ -1,5 +1,7 @@
 'use strict';
 
+require('../wordMapRow/wordMapRow.directive.js');
+
 app.directive('wordMap',[function(){
 	return {
 		restric: 'E',

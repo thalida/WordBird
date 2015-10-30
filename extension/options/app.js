@@ -1,3 +1,8 @@
+'use strict';
+
+require('./app.scss');
+require('angular');
+
 window.app = angular.module('app', []);
 
 app.controller('mainCtrl', [
@@ -37,3 +42,7 @@ app.controller('mainCtrl', [
 		};
 	}
 ]);
+
+require('./components/storageCollection/storageCollection.service.js');
+require('./components/wordMap/wordMap.directive.js');
+require('./components/blacklist/blacklist.directive.js');

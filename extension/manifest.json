@@ -24,7 +24,7 @@
 
 	"options_ui": {
 		"page": "options/index.html",
-		"chrome_style": true
+		"chrome_style": false
 	},
 
 	"options_page": "options/index.html",

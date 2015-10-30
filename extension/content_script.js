@@ -3,33 +3,47 @@
 // http://stackoverflow.com/questions/15604140/replace-multiple-strings-with-multiple-other-strings
 
 var StringReplacer = function( map, config ){
-	if( typeof map !== 'undefined' ){
-		this.wordMap = map;
-		this.regex = this.createRegex();
-	}
+	this.touchedNodes = [];
+	this.set('wordMap', map);
 };
 
 StringReplacer.prototype = {
 	run: function( startNode ){
+		this.touchedNodes = [];
 		this.walk( startNode );
 	},
 
 	set: function( key, value ){
 		this[key] = value;
+
 		if( key === 'wordMap' ){
-			this.regex = this.createRegex();
+			if( typeof value === 'undefined' ){
+				this.hasMap = false;
+			} else {
+				this.regex = this.createRegex();
+			}
 		}
 	},
 
 	createRegex: function(){
-		var keysQuery = Object.keys(this.wordMap).join('|');
+		this.keys = Object.keys(this.wordMap);
+		this.hasMap = this.keys.length > 0;
+
+		if( this.hasMap === false ){
+			return;
+		}
+
+		var keysQuery = this.keys.join('|');
 		var regexStr = '\\b(' + keysQuery + ')\\b';
 		return new RegExp(regexStr, 'gi');
 	},
 
 	walk: function( node ){
-		var child, next;
+		if( this.hasMap === false ){
+			return;
+		}
 
+		var child, next;
 		switch ( node.nodeType ){
 			case 1:  // Element
 			case 9:  // Document
@@ -51,13 +65,16 @@ StringReplacer.prototype = {
 	},
 
 	handleTextNode: function( textNode ){
-		textNode.nodeValue = this.replaceWords(textNode.nodeValue);
+		textNode.nodeValue = this.replaceWords(textNode);
 	},
 
-	replaceWords: function( str ){
+	replaceWords: function( node ){
 		var wordMap = this.wordMap;
+		var origNodeValue = node.nodeValue;
 
-		return str.replace(this.regex, function( matchedStr, foundStr ){
+		return origNodeValue.replace(this.regex, function( matchedStr, foundStr ){
+			this.touchedNodes.push({node: node, origValue: origNodeValue});
+
 			var replacementStr = wordMap[foundStr.toLowerCase()];
 			var result = matchedStr.replace(foundStr, replacementStr);
 
@@ -66,11 +83,12 @@ StringReplacer.prototype = {
 			}
 
 			return result;
-		});
+		}.bind(this));
 	}
 };
 
 var WordBird = function(){
+	this.isProcessing = false;
 	this.strReplacer = new StringReplacer();
 	this.run();
 	chrome.storage.onChanged.addListener( this.onStorageChange.bind(this) );
@@ -83,44 +101,82 @@ WordBird.prototype = {
 		});
 	},
 
-	run: function(){
-		if( this.hasBeenRun === true ){
+	run: function( ){
+		if( this.isProcessing === true ){
 			return;
 		}
 
-		this.getStorage('isEnabled', function( isEnabled ){
-			if( isEnabled !== true ){
-				return;
-			}
-
-			this.getStorage('wordMap', function( wordMap ){
-				this.hasBeenRun = true;
-				this.strReplacer.set('wordMap', wordMap);
-				this.strReplacer.run( document.body );
-			}.bind(this));
-		}.bind(this));
+		this.isProcessing = true;
+		this.getStorage('isEnabled', this.onGetEnabled.bind(this));
 	},
 
-	disable: function(){
-		// if( window.confirm('WirdBird needs to refresh') ){
-		// 	window.location.reload( false );
-		// }
+	reset: function(){
+		if( this.isProcessing === true ){
+			return;
+		}
+
+		this.isProcessing = true;
+
+		var nodes = this.strReplacer.touchedNodes;
+		var totalNodes = nodes.length;
+
+		for(var i = 0; i < totalNodes; i += 1){
+			var currItem = nodes[i];
+			currItem.node.nodeValue = currItem.origValue;
+		}
+
+		this.isProcessing = false;
+	},
+
+	onGetEnabled: function( isEnabled ){
+		if( isEnabled !== true ){
+			this.isProcessing = false;
+			return;
+		}
+
+		this.getStorage('blacklist', this.onGetBlacklist.bind(this));
+	},
+
+	onGetBlacklist: function( blacklist ){
+		var currUrl = window.location.href;
+		var totalBlacklist = blacklist.length;
+		var isBlacklisted = false;
+
+		for(var i = 0; i < totalBlacklist; i += 1 ){
+			var url = blacklist[i];
+			if( currUrl.indexOf( url ) >= 0 ){
+				isBlacklisted = true;
+				break;
+			}
+		}
+
+		if( isBlacklisted ){
+			this.isProcessing = false;
+			return;
+		}
+
+		this.getStorage('wordMap', this.onGetWordMap.bind(this));
+	},
+
+	onGetWordMap: function( wordMap ){
+		this.strReplacer.set('wordMap', wordMap);
+		this.strReplacer.run( document.body );
+		this.isProcessing = false;
 	},
 
 	onStorageChange: function(changes, namespace) {
-		for (var key in changes) {
+		for( var key in changes ){
 			var storageData = changes[key];
-			var newValue = storageData.newValue;
-			var oldValue = storageData.oldValue;
 
 			if( key === 'isEnabled' ){
-				if( newValue === true ){
+				if( storageData.newValue === true ){
 					this.run();
 				} else {
-					this.disable();
+					this.reset();
 				}
-			} else if( key === 'wordMap' ){
-				this.hasBeenRun = false;
+			} else if( key === 'wordMap' || key === 'blacklist' ){
+				this.reset();
+				this.run();
 			}
 		}
 	}

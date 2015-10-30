@@ -22,7 +22,12 @@
 		"persistent": true
 	},
 
-	"options_page": "options/options.html",
+	"options_ui": {
+		"page": "options/index.html",
+		"chrome_style": true
+	},
+
+	"options_page": "options/index.html",
 
 	"content_scripts": [{
 		"matches": ["*://*/*"],

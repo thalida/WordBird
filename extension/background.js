@@ -40,6 +40,16 @@ var events = {
 	init: function(){
 		toggle.get( icon.set );
 		chrome.browserAction.onClicked.addListener( events.onClick );
+		chrome.runtime.onInstalled.addListener( events.onInstall );
+	},
+	onInstall: function( details ){
+		if( details.reason === 'install' ){
+			if (chrome.runtime.openOptionsPage) {
+				chrome.runtime.openOptionsPage();
+			} else {
+				window.open(chrome.runtime.getURL('options/index.html'));
+			}
+		}
 	},
 	onClick: function ( tab ) {
 		toggle.get(function( state ){

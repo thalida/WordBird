@@ -21,7 +21,7 @@ app.service('StorageCollection',['StorageItem', function( StorageItem ){
 		},
 
 		onChange: function(changes, namespace) {
-			$.each(changes, function(key, changedItem){
+			angular.forEach(changes, function(key, changedItem){
 				var storageItem = this.items[key];
 
 				if( typeof storageItem === 'undefined' ){

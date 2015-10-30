@@ -3,27 +3,33 @@
 app.directive('wordMap',[function(){
 	return {
 		restric: 'E',
-		scope: {
-			map: '='
+		templateUrl: 'components/wordMap/wordMap.html',
+		scope: {},
+		bindToController: {
+			map: '=',
+			changeCB: '&onChange'
 		},
-		template: [
-			'<div class="mapping">',
-				'<div ng-repeat="(word, replacer) in map">',
-					'<word-map:row word="word" replacer="replacer"></word-map:row>',
-				'</div>',
-			'</div>'
-		].join(''),
-		controller: ['$scope','$element','$attrs', function ($scope, $element, $attrs){
-			if( typeof $scope.map !== 'object' ){
-				$scope.map = {};
+		controllerAs: 'wordmap',
+		controller: function (){
+			if( typeof this.map !== 'object' ){
+				this.map = {};
 			}
 
-			this.onChange = function( newPair ){
-				$scope.map[newPair.key] = newPair.value;
-			};
-		}],
-		link: function($scope, $el, attrs){
+			this.onChange = function( actions ){
+				var oldMap = angular.copy( this.map );
 
+				if( typeof actions.remove === 'object' ){
+					delete this.map[actions.remove.key];
+				}
+
+				if( typeof actions.add === 'object' ){
+					this.map[actions.add.key] = actions.add.value;
+				}
+
+				this.changeCB({res: {newVal: this.map, oldVal: oldMap }});
+
+				return this.map;
+			};
 		}
 	};
 }]);

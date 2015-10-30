@@ -1,5 +1,7 @@
 'use strict';
 
+require('../storageItem/storageItem.service');
+
 app.service('StorageCollection',['StorageItem', function( StorageItem ){
 	var StorageCollection = function(){
 		this.items = {};

@@ -14,6 +14,7 @@ app.directive('wordMapRow',[function(){
     	controllerAs: 'maprow',
 		controller: ['$element', '$attrs', function( $el, attrs ){
 			var ENTER_KEY = 13;
+			var $wordInput;
 
 			this.isCreatorRow = ( typeof attrs.creator !== 'undefined' );
 
@@ -22,6 +23,10 @@ app.directive('wordMapRow',[function(){
 
 			this.validate = function( e, inputName ){
 				this[inputName].isValid = this.form[inputName].$valid === true;
+
+				if( typeof this[inputName].val === 'string' && this[inputName].val.length === 0 ){
+					this[inputName].isValid = false;
+				}
 
 				if( this[inputName].isValid === false || this.form.$valid === false ){
 					return;
@@ -42,7 +47,8 @@ app.directive('wordMapRow',[function(){
 				if( this.isCreatorRow ){
 					this.word.val = '';
 					this.replacer.val = '';
-					$el.children('.js-word-input')[0].focus();
+					$wordInput.focus();
+					this.form.$setPristine();
 				}
 			};
 
@@ -52,6 +58,9 @@ app.directive('wordMapRow',[function(){
 
 			this.onEvent = function( e ){
 				if( e.type === 'blur' || e.keyCode === ENTER_KEY ){
+					if( e.target.name === 'word' ){
+						$wordInput = e.target;
+					}
 					this.validate( e, e.target.name );
 				}
 			};

@@ -11,7 +11,8 @@ app.controller('mainCtrl', [
 			key: 'wordMap',
 			defaultTo: {
 				'word': 'bird',
-				'bird': 'flippity flappity'
+				'cloud': 'butt',
+				'google': 'Our Benevolent Lord and Master'
 			},
 			onChange: function( wordMap ){
 				$scope.wordMap = wordMap;
@@ -20,7 +21,7 @@ app.controller('mainCtrl', [
 
 		storage.add({
 			key: 'blacklist',
-			defaultTo: [],
+			defaultTo: ['inbox.google.com', 'mail.google.com', 'calendar.google.com'],
 			onChange: function( blacklist ){
 				$scope.blacklist = blacklist;
 			}

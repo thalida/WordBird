@@ -1,6 +1,7 @@
-<div class="mapping">
+<div class="wordmap">
+	<span class="app-sectionHeader">Active Words</span>
 	<word-map:row creator on-change="wordmap.onChange( actions )"></word-map:row>
-	<div ng-repeat="(word, replacer) in wordmap.map">
+	<div class="wordmap-list" ng-repeat="(word, replacer) in wordmap.map">
 		<word-map:row word="{{word}}" replacer="{{replacer}}" on-change="wordmap.onChange( actions )"></word-map:row>
 	</div>
 </div>

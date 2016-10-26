@@ -39,7 +39,7 @@ var icon = {
 var events = {
 	init: function(){
 		toggle.get( icon.set );
-		chrome.browserAction.onClicked.addListener( events.onClick );
+		// chrome.browserAction.onClicked.addListener( events.onClick );
 		chrome.runtime.onInstalled.addListener( events.onInstall );
 	},
 	onInstall: function( details ){

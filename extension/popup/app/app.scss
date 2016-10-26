@@ -1,10 +1,5 @@
-@mixin clearfix {
-  &:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
-}
+@import 'scss/mixins';
+@import 'scss/colors';
 
 html { box-sizing: border-box; }
 *, *:before, *:after { box-sizing: inherit; }
@@ -14,8 +9,8 @@ body {
 	padding: 0;
 	margin: 0;
 
-	background: white;
-	color: black;
+	background: $brand-white;
+	color: $brand-black;
 	font: 16px/1.4 'Roboto Slab', serif;
 }
 
@@ -57,12 +52,12 @@ body {
 		padding: 5px 0;
 
 		border: 0;
-		border-bottom: 2px solid rgba(black, 0.25);
+		border-bottom: 2px solid $brand-black-faded-2;
 		font-size: 20px;
 		font-weight: 400;
 
 		&:focus {
-			border-bottom-color: rgba(black, 0.9);
+			border-bottom-color: $brand-black-faded-1;
 		}
 	}
 
@@ -72,7 +67,7 @@ body {
 		width: 100%;
 		margin-top: 3px;
 
-		color: #7564FF;
+		color: $brand-purple;
 		font-size: 12px;
 	}
 }

@@ -1,0 +1,11 @@
+@import '../../scss/mixins';
+@import '../../scss/colors';
+
+.header-component {
+    margin-bottom: 30px;
+    text-align: center;
+
+    .name {
+        font-size: 25px;
+    }
+}

@@ -1,0 +1,48 @@
+<form class="wordmap-row" name="maprow.form" novalidate>
+	<div class="formInput">
+		<input
+			class="formInput-input"
+			type="text"
+
+			name="word"
+			ng-model="maprow.word.val"
+			ng-keyup="maprow.onEvent($event)"
+			ng-blur="maprow.onEvent($event)"
+			ng-pattern="/^\s*\w*\s*$/"
+			ng-trim="false"
+			placeholder="Find word..."
+			required />
+
+		<span class="formInput-error">
+			<span ng-show="!maprow.word.isValid && maprow.form.word.$dirty && maprow.form.word.$error.required">Required</span>
+			<span ng-show="!maprow.word.isValid && maprow.form.word.$dirty && maprow.form.word.$error.pattern">Enter one word only</span>
+		</span>
+	</div>
+
+	<span class="wordmap-arrow"></span>
+
+	<div class="formInput">
+		<input
+			class="formInput-input"
+			type="text"
+			name="replacer"
+			ng-model="maprow.replacer.val"
+			ng-keyup="maprow.onEvent($event)"
+			ng-blur="maprow.onEvent($event)"
+			ng-maxlength="50"
+			placeholder="Replace with..."
+			ng-trim="false"
+			required />
+
+		<span class="formInput-error">
+			<span ng-show="!maprow.replacer.isValid && maprow.form.replacer.$dirty && maprow.form.replacer.$error.required">Required</span>
+			<span ng-show="!maprow.replacer.isValid && maprow.form.replacer.$dirty && maprow.form.replacer.$error.maxlength">Max 50 characters</span>
+		</span>
+	</div>
+
+	<span
+		ng-if="maprow.isCreatorRow === false"
+		class="wordmap-delete"
+		ng-click="maprow.remove()">
+	</span>
+</form>

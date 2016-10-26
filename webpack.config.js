@@ -2,7 +2,7 @@
 var webpack = require('webpack');
 var path = require('path');
 
-var APP = __dirname + '/extension/options';
+var APP = __dirname + '/extension/popup';
 
 module.exports = {
 	context: APP,
@@ -12,7 +12,7 @@ module.exports = {
 	output: {
 		path: APP + '/bundle',
 		filename: 'bundle.js',
-		publicPath: '/options/bundle/'
+		publicPath: '/popup/bundle/'
 	},
 	module: {
 		loaders: [

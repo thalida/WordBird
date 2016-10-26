@@ -2,31 +2,62 @@
 var webpack = require('webpack');
 var path = require('path');
 
-var APP = __dirname + '/extension/popup';
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var CopyWebpackPlugin = require("copy-webpack-plugin");
+
+var APP =  path.join(__dirname, '/extension/popup');
+var DIST = path.join(APP, '/bundle');
 
 module.exports = {
 	context: APP,
 	entry: {
-		app: './app.js'
+		app: './'
 	},
 	output: {
-		path: APP + '/bundle',
-		filename: 'bundle.js',
+		path: DIST,
+		filename: '[name].[hash].js',
 		publicPath: '/popup/bundle/'
 	},
 	module: {
 		loaders: [
-			{
-				test: /\.scss$/,
-				loaders: ['style', 'css', 'sass']
-			},
-			{
-				test: /\.(jpe?g|png|gif|svg)$/i,
-				loaders: [
-					'file?hash=sha512&digest=hex&name=[hash].[ext]',
-					'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
-				]
-			}
+            {
+                test: require.resolve('angular'),
+                loader: "expose?angular"
+            },
+            {
+                test: /\.js$/,
+                exclude: [/node_modules/],
+                loaders: ['ng-annotate']
+            },
+            {
+                test: /\.scss$/,
+                loader: ExtractTextPlugin.extract("style-loader", "css-loader!resolve-url-loader!sass-loader")
+            },
+            {
+                test: /\.html$/,
+                loader: 'ngtemplate?relativeTo=' + APP + '/!html',
+                exclude: path.resolve(APP, 'index.html')
+            },
+            {
+                test: /\.woff(2)?(\?]?.*)?$/,
+                loader: 'url-loader?limit=10000&mimetype=application/font-woff'
+            },
+            {
+                test: /\.(ttf|eot|svg|png|gif|jpg|jpeg|wav|mp3)(\?]?.*)?$/,
+                loader: 'file-loader?[path][name].[ext]'
+            },
+            {
+                test: /\.(json)(\?]?.*)?$/,
+                loader: 'json-loader'
+            }
 		]
-	}
+	},
+    plugins: [
+		new ExtractTextPlugin("[name].[hash].css", {allChunks: true}),
+        new HtmlWebpackPlugin({
+            template: APP + '/index.html',
+            inject: true
+        })
+    ]
 };

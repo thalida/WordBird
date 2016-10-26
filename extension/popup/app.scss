@@ -23,15 +23,6 @@ body {
 	margin: 30px auto;
 	padding: 0 30px;
 	width: 560px;
-
-	&-header {
-		margin-bottom: 30px;
-		text-align: center;
-
-		.name {
-			font-size: 25px;
-		}
-	}
 }
 
 .sectionHeader {
@@ -85,5 +76,3 @@ body {
 		font-size: 12px;
 	}
 }
-
-@import 'components/wordMap/wordMap';

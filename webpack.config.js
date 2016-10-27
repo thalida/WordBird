@@ -6,8 +6,8 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var CopyWebpackPlugin = require("copy-webpack-plugin");
 
-var APP =  path.join(__dirname, '/extension/popup/app');
-var DIST =  path.join(__dirname, '/extension/popup/dist');
+var APP =  path.join(__dirname, '/extension/public/app');
+var DIST =  path.join(__dirname, '/extension/public/dist');
 console.log('APP', APP);
 console.log('DIST', DIST);
 
@@ -19,7 +19,7 @@ module.exports = {
 	output: {
 		path: DIST,
 		filename: '[name].[hash].js',
-		publicPath: '/popup/dist/'
+		publicPath: '/public/dist/'
 	},
 	resolve: {
         root: APP,

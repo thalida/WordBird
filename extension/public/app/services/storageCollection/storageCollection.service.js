@@ -10,6 +10,7 @@ module.exports = function( StorageItem ){
 
 	StorageCollection.prototype = {
 		add: function( opts ){
+			console.log( opts );
 			this.items[opts.key] = new StorageItem( opts.key, opts.defaultTo, opts.onChange );
 			return this.get( opts.key );
 		},

@@ -3,12 +3,12 @@
 module.exports = {
 	templateUrl: 'components/wordMap/wordMap.html',
 	bindings: {
-		map: '=',
+		map: '<',
 		changeCB: '&onChange'
 	},
 	controller: function (){
 		var $ctrl = this;
-		
+
 		if( typeof $ctrl.map !== 'object' ){
 			$ctrl.map = {};
 		}
@@ -28,5 +28,7 @@ module.exports = {
 
 			return $ctrl.map;
 		};
+
+		console.log( $ctrl.map )
 	}
 };

@@ -1,5 +1,5 @@
 <div class="blacklist-component">
-	<h1>Blacklist</h1>
+	<h1>Blacklisted Sites</h1>
 	<h2>Websites that should <strong>not</strong> be affected!</h2>
 
 	<form class="blacklist-component-form" name="$ctrl.form" novalidate>
@@ -12,6 +12,11 @@
 			ng-trim="false"
 			placeholder="http://example.com"
 			required />
+
+		<span class="formInput-help"
+		  ng-hide="!$ctrl.newUrl.isValid && $ctrl.form.url.$dirty">
+		  Press <strong>enter</strong> to save
+		</span>
 
 		<span class="formInput-error" ng-show="$ctrl.newUrl.isValid === false">
 			<span ng-show="$ctrl.form.url.$error.required">Required</span>

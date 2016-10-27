@@ -39,11 +39,46 @@ h2,
 	margin: 0;
 	padding: 0;
 
+	font-size: 18px;
+	font-weight: 400;
+	text-align: left;
+}
+
+h3,
+.h3 {
+	display: block;
+
+	margin: 0;
+	padding: 0;
+
 	font-size: 16px;
 	font-weight: 400;
 	text-align: left;
 
 	color: $brand-black-faded-2;
+}
+
+a,
+.link {
+	cursor: pointer;
+	color: $brand-blue;
+	text-decoration: none;
+
+	&:hover {
+		color: $brand-blue-lighter;
+	}
+}
+
+.p1 {
+	font-size: 16px;
+	font-weight: 300;
+	margin: 0;
+}
+
+.divider {
+	margin: 50px 0;
+	border: 0;
+	border-bottom: 1px solid $brand-gray;
 }
 
 .weight {

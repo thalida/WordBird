@@ -1,0 +1,16 @@
+<div class="toggle-component" ng-cloak>
+	<form class="toggle-component-form" name="$ctrl.form" novalidate>
+	    <span class="toggle-component-text" ng-click="$ctrl.state = false; $ctrl.onChange($event)">{{$ctrl.offLabel}}</span>
+		<label class="toggle-component-switch">
+			<input
+				class="toggle-component-input"
+				type="checkbox"
+				name="checkbox"
+				ng-model="$ctrl.state"
+				ng-change="$ctrl.onChange($event)" />
+
+			 <div class="toggle-component-slider"></div>
+		</label>
+	    <span class="toggle-component-text" ng-click="$ctrl.state = true; $ctrl.onChange($event)">{{$ctrl.onLabel}}</span>
+	</form>
+</div>

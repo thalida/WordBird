@@ -3,7 +3,7 @@
 
 	"name": "WordBird",
 	"description": "Change from Word to Word",
-	"version": "0.1",
+	"version": "1.0.0",
 
 	"permissions": [
 		"storage"
@@ -14,7 +14,8 @@
 			"19": "icons/icon-on.19.png",
 			"48": "icons/icon-on.48.png",
 			"128": "icons/icon-on.128.png"
-		}
+		},
+		"default_popup": "public/dist/popup.html"
 	},
 
 	"background": {
@@ -22,12 +23,7 @@
 		"persistent": true
 	},
 
-	"options_ui": {
-		"page": "options/index.html",
-		"chrome_style": false
-	},
-
-	"options_page": "options/index.html",
+	"options_page": "public/dist/options.html",
 
 	"content_scripts": [{
 		"matches": ["*://*/*"],

@@ -1,0 +1,26 @@
+@import '../../scss/mixins';
+@import '../../scss/colors';
+
+.header-component {
+    margin-bottom: 30px;
+    text-align: center;
+
+    .logo {
+        display: inline-block;
+        vertical-align: middle;
+        padding: 0;
+        margin: 0;
+        width: 45px;
+        height: 45px;
+
+        .logo-img {
+            width: 100%;
+        }
+    }
+
+    .name {
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 25px;
+    }
+}

@@ -1,0 +1,6 @@
+@import '../../scss/mixins';
+@import '../../scss/colors';
+
+.word_map-component {
+	@include clearfix;
+}

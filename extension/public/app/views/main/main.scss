@@ -1,0 +1,18 @@
+@import '../../scss/mixins';
+@import '../../scss/colors';
+
+.main-view {
+    .blacklist-component {
+        margin-top: 50px;
+    }
+
+    .toggle-component {
+        margin-bottom: 50px;
+        text-align: center;
+    }
+
+    .p1 {
+        margin-top: 5px;
+        margin-bottom: 25px;
+    }
+}

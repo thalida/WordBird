@@ -1,0 +1,47 @@
+@import '../../scss/mixins';
+@import '../../scss/colors';
+
+.word_map_row-component {
+    margin-top: 15px;
+    
+    &-row {
+		@include clearfix;
+	}
+
+	&-arrow {
+		display: block;
+		float: left;
+
+		width: 14px;
+		height: 12px;
+		margin: 12px 20px;
+
+		background-color: transparent;
+		background-image: url('../../images/arrow.svg');
+		background-repeat: no-repeat;
+
+		opacity: 0.2;
+	}
+
+	&-delete {
+		display: block;
+		float: left;
+
+		width: 13px;
+		height: 16px;
+		margin: 12px 0 0 20px;
+
+		background-color: transparent;
+		background-image: url('../../images/trashcan.svg');
+		background-repeat: no-repeat;
+		cursor: pointer;
+
+		&:hover {
+			opacity: 0.7;
+		}
+	}
+
+	.formInput {
+		float: left;
+	}
+}

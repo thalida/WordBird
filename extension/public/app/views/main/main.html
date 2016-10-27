@@ -1,0 +1,27 @@
+<header ng-if="$ctrl.isPopup === false"></header>
+
+<div class="main-view">
+    <toggle state="$ctrl.isEnabled" on-label="on" off-label="off" on-change="$ctrl.onToggleUpdate(res)"></toggle>
+
+    <word-map map="$ctrl.wordMap" on-change="$ctrl.onMapUpdate(res)"></word-map>
+
+    <hr class="divider" ng-if="$ctrl.isPopup === false" />
+
+    <blacklist list="$ctrl.blacklist" on-change="$ctrl.onBlacklistUpdate(res)" ng-if="$ctrl.isPopup === false"></blacklist>
+
+    <div ng-if="$ctrl.isPopup === false">
+        <hr class="divider" />
+
+        <h2>Adding words to WordBird</h2>
+        <p class="p1">Under the "Active Words" section, enter the word you want to find, and the phrase that you want to replace it with.</p>
+        <h2>Blacklisting Sites</h2>
+        <p class="p1">A blacklisted site will <span class="weight-regular">never</span> be changed by WordBird. Add/remove blacklisted sites at your lesiure.</p>
+        <h2>Additional</h2>
+        <p class="p1">
+            WordBird is on <a href="https://github.com/thalida/WordBird" target="_blank">GitHub</a><br />
+            Created by <a href="http://thalida.com" target="_blank">thalida</a>
+        </p>
+    </div>
+</div>
+
+<footer ng-if="$ctrl.isPopup === true"></footer>

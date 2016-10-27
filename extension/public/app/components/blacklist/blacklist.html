@@ -1,0 +1,34 @@
+<div class="blacklist-component">
+	<h1>Blacklisted Sites</h1>
+	<h3>Websites that should <strong>not</strong> be affected!</h3>
+
+	<form class="blacklist-component-form" name="$ctrl.form" novalidate>
+		<input
+			class="formInput-input"
+			type="url"
+			name="url"
+			ng-model="$ctrl.newUrl.val"
+			ng-keyup="$ctrl.onKeyup($event)"
+			ng-trim="false"
+			placeholder="http://example.com"
+			required />
+
+		<span class="formInput-help"
+		  ng-hide="!$ctrl.newUrl.isValid && $ctrl.form.url.$dirty">
+		  Press <strong>enter</strong> to save
+		</span>
+
+		<span class="formInput-error" ng-show="$ctrl.newUrl.isValid === false">
+			<span ng-show="$ctrl.form.url.$error.required">Required</span>
+			<span ng-show="$ctrl.form.url.$error.url">Invalid url</span>
+		</span>
+	</form>
+
+	<div class="blacklist-component-list" ng-repeat="url in $ctrl.list track by $index">
+		<span
+			class="blacklist-component-delete"
+			ng-click="$ctrl.update({type: 'remove', data: $index })">
+		</span>
+		<span class="blacklist-component-item">{{url}}</span>
+	</div>
+</div>

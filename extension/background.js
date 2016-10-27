@@ -39,8 +39,9 @@ var icon = {
 var events = {
 	init: function(){
 		toggle.get( icon.set );
-		chrome.browserAction.onClicked.addListener( events.onClick );
+		// chrome.browserAction.onClicked.addListener( events.onClick );
 		chrome.runtime.onInstalled.addListener( events.onInstall );
+		chrome.storage.onChanged.addListener( events.onStorageChange );
 	},
 	onInstall: function( details ){
 		if( details.reason === 'install' ){
@@ -57,6 +58,15 @@ var events = {
 				icon.set( !state );
 			});
 		});
+	},
+	onStorageChange: function(changes, namespace) {
+		for( var key in changes ){
+			var storageData = changes[key];
+
+			if( key === 'isEnabled' ){
+				icon.set( storageData.newValue );
+			}
+		}
 	}
 };
 

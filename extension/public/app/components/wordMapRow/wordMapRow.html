@@ -1,0 +1,53 @@
+<form class="word_map_row-component" name="$ctrl.form" novalidate>
+	<div class="formInput">
+		<input
+			class="formInput-input"
+			type="text"
+
+			name="word"
+			ng-model="$ctrl.word.val"
+			ng-keyup="$ctrl.onEvent($event)"
+			ng-blur="$ctrl.onEvent($event)"
+			ng-pattern="/^\s*\w*\s*$/"
+			ng-trim="false"
+			placeholder="Find word..."
+			required />
+		<span class="formInput-error" ng-show="!$ctrl.word.isValid && $ctrl.form.word.$dirty">
+			<span ng-show="$ctrl.form.word.$error.required">Required</span>
+			<span ng-show="$ctrl.form.word.$error.pattern">Enter one word only</span>
+		</span>
+	</div>
+
+	<span class="word_map_row-component-arrow"></span>
+
+	<div class="formInput">
+		<input
+			class="formInput-input"
+			type="text"
+			name="replacer"
+			ng-model="$ctrl.replacer.val"
+			ng-keyup="$ctrl.onEvent($event)"
+			ng-blur="$ctrl.onEvent($event)"
+			ng-maxlength="50"
+			placeholder="Replace with..."
+			ng-trim="false"
+			required />
+
+		<span class="formInput-help"
+			  ng-if="$ctrl.isCreatorRow"
+			  ng-hide="!$ctrl.word.isValid && $ctrl.form.word.$dirty">
+			Press <strong>enter</strong> to save
+		</span>
+
+		<span class="formInput-error">
+			<span ng-show="!$ctrl.replacer.isValid && $ctrl.form.replacer.$dirty && $ctrl.form.replacer.$error.required">Required</span>
+			<span ng-show="!$ctrl.replacer.isValid && $ctrl.form.replacer.$dirty && $ctrl.form.replacer.$error.maxlength">Max 50 characters</span>
+		</span>
+	</div>
+
+	<span
+		ng-if="$ctrl.isCreatorRow === false"
+		class="word_map_row-component-delete"
+		ng-click="$ctrl.remove()">
+	</span>
+</form>

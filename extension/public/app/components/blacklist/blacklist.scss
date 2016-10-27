@@ -1,0 +1,40 @@
+@import '../../scss/mixins';
+@import '../../scss/colors';
+
+.blacklist-component {
+    h2 {
+        margin-bottom: 15px;
+    }
+
+    &-form {
+        margin: 20px 0;
+    }
+
+    &-list {
+        margin-top: 10px;
+    }
+
+    &-item {
+		display: inline-block;
+        vertical-align: middle;
+        font-size: 18px;
+    }
+
+    &-delete {
+		display: inline-block;
+        vertical-align: middle;
+
+		width: 13px;
+		height: 16px;
+		margin-right: 5px;
+
+		background-color: transparent;
+		background-image: url('../../images/trashcan.svg');
+		background-repeat: no-repeat;
+		cursor: pointer;
+
+		&:hover {
+			opacity: 0.7;
+		}
+	}
+}

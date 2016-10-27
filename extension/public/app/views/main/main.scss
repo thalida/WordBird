@@ -1,2 +1,8 @@
 @import '../../scss/mixins';
 @import '../../scss/colors';
+
+.main-view {
+    .blacklist-component {
+        margin-top: 50px;
+    }
+}

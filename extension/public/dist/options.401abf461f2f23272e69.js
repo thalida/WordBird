@@ -44,33 +44,12 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
+	'use strict';
 
-	// Vendors
-	__webpack_require__(1);
-	__webpack_require__(3);
+	__webpack_require__(58);
 
-	// Polyfills
-	__webpack_require__(6);
+	angular.module('app').constant('isPopup', false);
 
-	// Helpers
-	global.requireUtils = __webpack_require__(7);
-
-	// App
-	__webpack_require__(8);
-	__webpack_require__(9);
-
-	__webpack_require__(22);
-	__webpack_require__(28);
-	__webpack_require__(46);
-
-	// Bootstrap Angular App
-	var appScope = angular.element(document.querySelectorAll('.app')).scope()
-	if( typeof appScope === 'undefined' || appScope === null ){
-	    angular.bootstrap(document, ['app'])
-	}
-
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
 /* 1 */
@@ -61003,9 +60982,11 @@
 
 	var map = {
 		"./blacklist/index.js": 30,
-		"./header/index.js": 33,
-		"./wordMap/index.js": 38,
-		"./wordMapRow/index.js": 42
+		"./footer/index.js": 34,
+		"./header/index.js": 38,
+		"./toggle/index.js": 59,
+		"./wordMap/index.js": 43,
+		"./wordMapRow/index.js": 47
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -61028,23 +61009,30 @@
 	'use strict';
 
 	__webpack_require__(31);
+	__webpack_require__(32);
 
 	angular
 	    .module('app')
-	    .component('blacklist', __webpack_require__(32));
+	    .component('blacklist', __webpack_require__(33));
 
 
 /***/ },
 /* 31 */
 /***/ function(module, exports) {
 
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 32 */
+/***/ function(module, exports) {
+
 	var path = 'components/blacklist/blacklist.html';
-	var html = "<div class=\"blacklist-component\">\n\t<h1>Website Blacklist</h1>\n\t<h2>Websites that should <strong>not</strong> be affected</h2>\n\n\t<form name=\"$ctrl.form\" novalidate>\n\t\t<input\n\t\t\ttype=\"text\"\n\t\t\tname=\"url\"\n\t\t\tng-model=\"$ctrl.newUrl.val\"\n\t\t\tng-keyup=\"$ctrl.onKeyup($event)\"\n\t\t\tng-trim=\"false\"\n\t\t\tng-pattern=\"/^[(http(s)?):\\/\\/(www\\.)?a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)$/\"\n\t\t\tplaceholder=\"Type a word\"\n\t\t\trequired />\n\n\t\t<span ng-show=\"$ctrl.newUrl.isValid === false\">\n\t\t\tWord Error:\n\t\t\t<span ng-show=\"$ctrl.form.url.$error.required\">Required</span>\n\t\t\t<span ng-show=\"$ctrl.form.url.$error.pattern\">Invalid character</span>\n\t\t</span>\n\t</form>\n\n\t<div ng-repeat=\"url in $ctrl.list track by $index\">\n\t\t{{url}} <br />\n\t\t<input\n\t\t\ttype=\"button\"\n\t\t\tvalue=\"remove\"\n\t\t\tng-click=\"$ctrl.update({type: 'remove', data: $index })\" />\n\t</div>\n</div>\n";
+	var html = "<div class=\"blacklist-component\">\n\t<h1>Blacklist</h1>\n\t<h2>Websites that should <strong>not</strong> be affected!</h2>\n\n\t<form class=\"blacklist-component-form\" name=\"$ctrl.form\" novalidate>\n\t\t<input\n\t\t\tclass=\"formInput-input\"\n\t\t\ttype=\"url\"\n\t\t\tname=\"url\"\n\t\t\tng-model=\"$ctrl.newUrl.val\"\n\t\t\tng-keyup=\"$ctrl.onKeyup($event)\"\n\t\t\tng-trim=\"false\"\n\t\t\tplaceholder=\"http://example.com\"\n\t\t\trequired />\n\n\t\t<span class=\"formInput-error\" ng-show=\"$ctrl.newUrl.isValid === false\">\n\t\t\t<span ng-show=\"$ctrl.form.url.$error.required\">Required</span>\n\t\t\t<span ng-show=\"$ctrl.form.url.$error.url\">Invalid url</span>\n\t\t</span>\n\t</form>\n\n\t<div class=\"blacklist-component-list\" ng-repeat=\"url in $ctrl.list track by $index\">\n\t\t<span\n\t\t\tclass=\"blacklist-component-delete\"\n\t\t\tng-click=\"$ctrl.update({type: 'remove', data: $index })\">\n\t\t</span>\n\t\t<span class=\"blacklist-component-item\">{{url}}</span>\n\t</div>\n</div>\n";
 	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
 	module.exports = path;
 
 /***/ },
-/* 32 */
+/* 33 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -61100,39 +61088,33 @@
 
 
 /***/ },
-/* 33 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	__webpack_require__(34);
 	__webpack_require__(35);
+	__webpack_require__(36);
 
 	angular
 	    .module('app')
-	    .component('header', __webpack_require__(37));
+	    .component('footer', __webpack_require__(37));
 
 
 /***/ },
-/* 34 */
+/* 35 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 35 */
-/***/ function(module, exports, __webpack_require__) {
+/* 36 */
+/***/ function(module, exports) {
 
-	var path = 'components/header/header.html';
-	var html = "<div class=\"header-component\">\n    <div class=\"logo\"><img class=\"logo-img\" src=\"" + __webpack_require__(36) + "\" /></div>\n    <div class=\"name\">\n        <span class=\"weight-thin\">WordBird</span> <span class=\"weight-regular\">Settings</span>\n    </div>\n</div>\n";
+	var path = 'components/footer/footer.html';
+	var html = "<div class=\"footer-component\">\n    <a class=\"link\" ref ng-click=\"$ctrl.events.onClick($event, 'options')\">More Options</a>\n</div>\n";
 	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
 	module.exports = path;
-
-/***/ },
-/* 36 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "2f21111646f71ac2d3db27ef2055aa39.svg";
 
 /***/ },
 /* 37 */
@@ -61141,9 +61123,19 @@
 	'use strict';
 
 	module.exports = {
-		templateUrl: 'components/header/header.html',
+		templateUrl: 'components/footer/footer.html',
 		bindings: {},
-		controller: function (){}
+		controller: function (){
+			var $ctrl = this;
+
+			$ctrl.events = {
+				onClick: function( e, link ){
+					if( link === 'options' ){
+						chrome.runtime.openOptionsPage()
+					}
+				}
+			}
+		}
 	}
 
 
@@ -61158,7 +61150,7 @@
 
 	angular
 	    .module('app')
-	    .component('wordMap', __webpack_require__(41));
+	    .component('header', __webpack_require__(42));
 
 
 /***/ },
@@ -61169,6 +61161,54 @@
 
 /***/ },
 /* 40 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var path = 'components/header/header.html';
+	var html = "<div class=\"header-component\">\n    <div class=\"logo\"><img class=\"logo-img\" src=\"" + __webpack_require__(41) + "\" /></div>\n    <div class=\"name\">\n        <span class=\"weight-thin\">WordBird</span> <span class=\"weight-regular\">Settings</span>\n    </div>\n</div>\n";
+	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
+	module.exports = path;
+
+/***/ },
+/* 41 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "2f21111646f71ac2d3db27ef2055aa39.svg";
+
+/***/ },
+/* 42 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = {
+		templateUrl: 'components/header/header.html',
+		bindings: {},
+		controller: function (){}
+	}
+
+
+/***/ },
+/* 43 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	__webpack_require__(44);
+	__webpack_require__(45);
+
+	angular
+	    .module('app')
+	    .component('wordMap', __webpack_require__(46));
+
+
+/***/ },
+/* 44 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 45 */
 /***/ function(module, exports) {
 
 	var path = 'components/wordMap/wordMap.html';
@@ -61177,7 +61217,7 @@
 	module.exports = path;
 
 /***/ },
-/* 41 */
+/* 46 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -61217,35 +61257,35 @@
 
 
 /***/ },
-/* 42 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	__webpack_require__(43);
-	__webpack_require__(44);
+	__webpack_require__(48);
+	__webpack_require__(49);
 
 	angular
 	    .module('app')
-	    .component('wordMapRow', __webpack_require__(45));
+	    .component('wordMapRow', __webpack_require__(50));
 
 
 /***/ },
-/* 43 */
+/* 48 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 44 */
+/* 49 */
 /***/ function(module, exports) {
 
 	var path = 'components/wordMapRow/wordMapRow.html';
-	var html = "<form class=\"word_map_row-component\" name=\"$ctrl.form\" novalidate>\n\t<div class=\"formInput\">\n\t\t<input\n\t\t\tclass=\"formInput-input\"\n\t\t\ttype=\"text\"\n\n\t\t\tname=\"word\"\n\t\t\tng-model=\"$ctrl.word.val\"\n\t\t\tng-keyup=\"$ctrl.onEvent($event)\"\n\t\t\tng-blur=\"$ctrl.onEvent($event)\"\n\t\t\tng-pattern=\"/^\\s*\\w*\\s*$/\"\n\t\t\tng-trim=\"false\"\n\t\t\tplaceholder=\"Find word...\"\n\t\t\trequired />\n\n\t\t<span class=\"formInput-error\">\n\t\t\t<span ng-show=\"!$ctrl.word.isValid && $ctrl.form.word.$dirty && $ctrl.form.word.$error.required\">Required</span>\n\t\t\t<span ng-show=\"!$ctrl.word.isValid && $ctrl.form.word.$dirty && $ctrl.form.word.$error.pattern\">Enter one word only</span>\n\t\t</span>\n\t</div>\n\n\t<span class=\"word_map_row-component-arrow\"></span>\n\n\t<div class=\"formInput\">\n\t\t<input\n\t\t\tclass=\"formInput-input\"\n\t\t\ttype=\"text\"\n\t\t\tname=\"replacer\"\n\t\t\tng-model=\"$ctrl.replacer.val\"\n\t\t\tng-keyup=\"$ctrl.onEvent($event)\"\n\t\t\tng-blur=\"$ctrl.onEvent($event)\"\n\t\t\tng-maxlength=\"50\"\n\t\t\tplaceholder=\"Replace with...\"\n\t\t\tng-trim=\"false\"\n\t\t\trequired />\n\n\t\t<span class=\"formInput-error\">\n\t\t\t<span ng-show=\"!$ctrl.replacer.isValid && $ctrl.form.replacer.$dirty && $ctrl.form.replacer.$error.required\">Required</span>\n\t\t\t<span ng-show=\"!$ctrl.replacer.isValid && $ctrl.form.replacer.$dirty && $ctrl.form.replacer.$error.maxlength\">Max 50 characters</span>\n\t\t</span>\n\t</div>\n\n\t<span\n\t\tng-if=\"$ctrl.isCreatorRow === false\"\n\t\tclass=\"word_map_row-component-delete\"\n\t\tng-click=\"$ctrl.remove()\">\n\t</span>\n</form>\n";
+	var html = "<form class=\"word_map_row-component\" name=\"$ctrl.form\" novalidate>\n\t<div class=\"formInput\">\n\t\t<input\n\t\t\tclass=\"formInput-input\"\n\t\t\ttype=\"text\"\n\n\t\t\tname=\"word\"\n\t\t\tng-model=\"$ctrl.word.val\"\n\t\t\tng-keyup=\"$ctrl.onEvent($event)\"\n\t\t\tng-blur=\"$ctrl.onEvent($event)\"\n\t\t\tng-pattern=\"/^\\s*\\w*\\s*$/\"\n\t\t\tng-trim=\"false\"\n\t\t\tplaceholder=\"Find word...\"\n\t\t\trequired />\n\t\t<span class=\"formInput-error\" ng-show=\"!$ctrl.word.isValid && $ctrl.form.word.$dirty\">\n\t\t\t<span ng-show=\"$ctrl.form.word.$error.required\">Required</span>\n\t\t\t<span ng-show=\"$ctrl.form.word.$error.pattern\">Enter one word only</span>\n\t\t</span>\n\t</div>\n\n\t<span class=\"word_map_row-component-arrow\"></span>\n\n\t<div class=\"formInput\">\n\t\t<input\n\t\t\tclass=\"formInput-input\"\n\t\t\ttype=\"text\"\n\t\t\tname=\"replacer\"\n\t\t\tng-model=\"$ctrl.replacer.val\"\n\t\t\tng-keyup=\"$ctrl.onEvent($event)\"\n\t\t\tng-blur=\"$ctrl.onEvent($event)\"\n\t\t\tng-maxlength=\"50\"\n\t\t\tplaceholder=\"Replace with...\"\n\t\t\tng-trim=\"false\"\n\t\t\trequired />\n\n\t\t<span class=\"formInput-help\"\n\t\t\t  ng-if=\"$ctrl.isCreatorRow\"\n\t\t\t  ng-hide=\"!$ctrl.word.isValid && $ctrl.form.word.$dirty\">\n\t\t\tPress <strong>enter</strong> to save\n\t\t</span>\n\n\t\t<span class=\"formInput-error\">\n\t\t\t<span ng-show=\"!$ctrl.replacer.isValid && $ctrl.form.replacer.$dirty && $ctrl.form.replacer.$error.required\">Required</span>\n\t\t\t<span ng-show=\"!$ctrl.replacer.isValid && $ctrl.form.replacer.$dirty && $ctrl.form.replacer.$error.maxlength\">Max 50 characters</span>\n\t\t</span>\n\t</div>\n\n\t<span\n\t\tng-if=\"$ctrl.isCreatorRow === false\"\n\t\tclass=\"word_map_row-component-delete\"\n\t\tng-click=\"$ctrl.remove()\">\n\t</span>\n</form>\n";
 	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
 	module.exports = path;
 
 /***/ },
-/* 45 */
+/* 50 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -61316,20 +61356,20 @@
 
 
 /***/ },
-/* 46 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {// Requires all of the index.js files for the components in this directory
-	global.requireUtils.requireAll( __webpack_require__(47) );
+	global.requireUtils.requireAll( __webpack_require__(52) );
 
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 47 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./main/index.js": 48
+		"./main/index.js": 53
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -61342,40 +61382,40 @@
 	};
 	webpackContext.resolve = webpackContextResolve;
 	module.exports = webpackContext;
-	webpackContext.id = 47;
+	webpackContext.id = 52;
 
 
 /***/ },
-/* 48 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	__webpack_require__(49);
-	__webpack_require__(50);
+	__webpack_require__(54);
+	__webpack_require__(55);
 
 	angular.module('app')
-	    .config( __webpack_require__(51) )
-	    .controller('MainController', __webpack_require__(52) )
+	    .config( __webpack_require__(56) )
+	    .controller('MainController', __webpack_require__(57) )
 
 
 /***/ },
-/* 49 */
+/* 54 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 50 */
+/* 55 */
 /***/ function(module, exports) {
 
 	var path = 'views/main/main.html';
-	var html = "<div class=\"main-view\">\n    <word-map map=\"$ctrl.wordMap\" on-change=\"$ctrl.onMapUpdate(res)\"></word-map>\n    <blacklist list=\"$ctrl.blacklist\" on-change=\"$ctrl.onBlacklistUpdate(res)\"></blacklist>\n</div>\n";
+	var html = "<header></header>\n\n<div class=\"main-view\">\n    <toggle on-change=\"$ctrl.onToggleUpdate(res)\"></toggle>\n    <word-map map=\"$ctrl.wordMap\" on-change=\"$ctrl.onMapUpdate(res)\"></word-map>\n    <blacklist list=\"$ctrl.blacklist\" on-change=\"$ctrl.onBlacklistUpdate(res)\" ng-if=\"$ctrl.isPopup === false\"></blacklist>\n</div>\n\n<footer ng-if=\"$ctrl.isPopup === true\"></footer>\n";
 	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
 	module.exports = path;
 
 /***/ },
-/* 51 */
+/* 56 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -61408,17 +61448,19 @@
 
 
 /***/ },
-/* 52 */
+/* 57 */
 /***/ function(module, exports) {
 
 	'use strict';
 
-	module.exports = ["StorageCollection", function( StorageCollection ){
+	module.exports = ["StorageCollection", "isPopup", function( StorageCollection, isPopup ){
 	    "ngInject";
 
 	    var $ctrl = this;
 	    var isProcessing = false;
 	    var storage = new StorageCollection();
+
+	    $ctrl.isPopup = isPopup;
 
 	    storage.add({
 	        key: 'wordMap',
@@ -61440,6 +61482,10 @@
 	        }
 	    });
 
+	    $ctrl.onToggleUpdate = function( toggle ){
+	        storage.set('isEnabled', toggle.newVal);
+	    };
+
 	    $ctrl.onMapUpdate = function( map ){
 	        storage.set('wordMap', map.newVal);
 	    };
@@ -61449,6 +61495,90 @@
 	        storage.set('blacklist', list.newVal);
 	    };
 	}];
+
+
+/***/ },
+/* 58 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
+
+	// Vendors
+	__webpack_require__(1);
+	__webpack_require__(3);
+
+	// Polyfills
+	__webpack_require__(6);
+
+	// Helpers
+	global.requireUtils = __webpack_require__(7);
+
+	// App
+	__webpack_require__(8);
+	__webpack_require__(9);
+
+	__webpack_require__(22);
+	__webpack_require__(28);
+	__webpack_require__(51);
+
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
+/* 59 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	__webpack_require__(63);
+	__webpack_require__(64);
+
+	angular
+	    .module('app')
+	    .component('toggle', __webpack_require__(65));
+
+
+/***/ },
+/* 60 */,
+/* 61 */,
+/* 62 */,
+/* 63 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 64 */
+/***/ function(module, exports) {
+
+	var path = 'components/toggle/toggle.html';
+	var html = "<div class=\"blacklist-component\">\n\t<form class=\"blacklist-component-form\" name=\"$ctrl.form\" novalidate>\n\t\t<input\n\t\t\tclass=\"formInput-input\"\n\t\t\ttype=\"checkbox\"\n\t\t\tname=\"checkbox\"\n\t\t\tng-model=\"$ctrl.state\"\n\t\t\tng-keyup=\"$ctrl.onKeyup($event)\"\n\t\t\tng-trim=\"false\"\n\t\t\tplaceholder=\"http://example.com\"\n\t\t\trequired />\n\n\t\t<span class=\"formInput-error\" ng-show=\"$ctrl.newUrl.isValid === false\">\n\t\t\t<span ng-show=\"$ctrl.form.url.$error.required\">Required</span>\n\t\t\t<span ng-show=\"$ctrl.form.url.$error.url\">Invalid url</span>\n\t\t</span>\n\t</form>\n</div>\n";
+	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
+	module.exports = path;
+
+/***/ },
+/* 65 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = {
+		templateUrl: 'components/toggle/toggle.html',
+		bindings: {
+			state: '=',
+			changeCB: '&onChange'
+		},
+		controller: function (){
+			var $ctrl = this;
+
+			if( typeof $ctrl.state === 'undefined' ){
+				$ctrl.state = true;
+			}
+
+			$ctrl.onChange = function(){
+				$ctrl.changeCB({res: {newVal: $ctrl.state, oldVal: !$ctrl.state }});
+			};
+		}
+	};
 
 
 /***/ }

@@ -1,4 +1,9 @@
+<header></header>
+
 <div class="main-view">
+    <toggle state="$ctrl.isEnabled" label="Enabled" on-change="$ctrl.onToggleUpdate(res)"></toggle>
     <word-map map="$ctrl.wordMap" on-change="$ctrl.onMapUpdate(res)"></word-map>
-    <blacklist list="$ctrl.blacklist" on-change="$ctrl.onBlacklistUpdate(res)"></blacklist>
+    <blacklist list="$ctrl.blacklist" on-change="$ctrl.onBlacklistUpdate(res)" ng-if="$ctrl.isPopup === false"></blacklist>
 </div>
+
+<footer ng-if="$ctrl.isPopup === true"></footer>

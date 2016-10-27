@@ -81,13 +81,69 @@ h2,
   border-bottom-color: rgba(0, 0, 0, 0.9);
 }
 
+.formInput-help {
+  display: block;
+  height: 15px;
+  width: 100%;
+  margin-top: 3px;
+  color: rgba(0, 0, 0, 0.25);
+  font-size: 12px;
+}
+
 .formInput-error {
   display: block;
   height: 15px;
   width: 100%;
   margin-top: 3px;
-  color: #7564FF;
+  color: #FF8181;
   font-size: 12px;
+}.blacklist-component h2 {
+  margin-bottom: 15px;
+}
+
+.blacklist-component-form {
+  margin-bottom: 15px;
+}
+
+.blacklist-component-list {
+  margin-top: 10px;
+}
+
+.blacklist-component-item {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 18px;
+}
+
+.blacklist-component-delete {
+  display: inline-block;
+  vertical-align: middle;
+  width: 13px;
+  height: 16px;
+  margin-right: 5px;
+  background-color: transparent;
+  background-image: url(/public/dist/7f229bc7e93df5b43a26e5a62f87bd4a.svg);
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.blacklist-component-delete:hover {
+  opacity: 0.7;
+}.footer-component {
+  margin-top: 50px;
+  padding: 15px 0 0;
+  text-align: center;
+  border-top: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.footer-component .link {
+  cursor: pointer;
+  color: #498FFF;
+  text-decoration: none;
+}
+
+.footer-component .link:hover {
+  color: #7caeff;
 }.header-component {
   margin-bottom: 30px;
   text-align: center;
@@ -110,6 +166,38 @@ h2,
   display: inline-block;
   vertical-align: middle;
   font-size: 25px;
+}.blacklist-component h2 {
+  margin-bottom: 15px;
+}
+
+.blacklist-component-form {
+  margin-bottom: 15px;
+}
+
+.blacklist-component-list {
+  margin-top: 10px;
+}
+
+.blacklist-component-item {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 18px;
+}
+
+.blacklist-component-delete {
+  display: inline-block;
+  vertical-align: middle;
+  width: 13px;
+  height: 16px;
+  margin-right: 5px;
+  background-color: transparent;
+  background-image: url(/public/dist/7f229bc7e93df5b43a26e5a62f87bd4a.svg);
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.blacklist-component-delete:hover {
+  opacity: 0.7;
 }.word_map-component:after {
   content: "";
   display: table;
@@ -154,4 +242,6 @@ h2,
 
 .word_map_row-component .formInput {
   float: left;
+}.main-view .blacklist-component {
+  margin-top: 50px;
 }

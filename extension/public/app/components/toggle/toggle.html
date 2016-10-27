@@ -1,0 +1,13 @@
+<div class="toggle-component">
+	<form class="toggle-component-form" name="$ctrl.form" novalidate>
+		<label>
+			<input
+				type="checkbox"
+				name="checkbox"
+				ng-model="$ctrl.state"
+				ng-change="$ctrl.onChange($event)" />
+
+			{{$ctrl.label}}
+		</label>
+	</form>
+</div>

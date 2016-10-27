@@ -1,11 +1,21 @@
 'use strict';
 
-module.exports = function( StorageCollection ){
+module.exports = function( StorageCollection, isPopup ){
     "ngInject";
 
     var $ctrl = this;
     var isProcessing = false;
     var storage = new StorageCollection();
+
+    $ctrl.isPopup = isPopup;
+
+    storage.add({
+        key: 'isEnabled',
+        defaultTo: true,
+        onChange: function( isEnabled ){
+            $ctrl.isEnabled = isEnabled;
+        }
+    });
 
     storage.add({
         key: 'wordMap',
@@ -26,6 +36,10 @@ module.exports = function( StorageCollection ){
             $ctrl.blacklist = blacklist;
         }
     });
+
+    $ctrl.onToggleUpdate = function( toggle ){
+        storage.set('isEnabled', toggle.newVal);
+    };
 
     $ctrl.onMapUpdate = function( map ){
         storage.set('wordMap', map.newVal);

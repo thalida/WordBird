@@ -79,13 +79,23 @@ h2,
 		}
 	}
 
+	&-help {
+		display: block;
+		height: 15px;
+		width: 100%;
+		margin-top: 3px;
+
+		color: $brand-black-faded-2;
+		font-size: 12px;
+	}
+
 	&-error {
 		display: block;
 		height: 15px;
 		width: 100%;
 		margin-top: 3px;
 
-		color: $brand-purple;
+		color: $brand-red;
 		font-size: 12px;
 	}
 }

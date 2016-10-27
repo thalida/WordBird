@@ -1,0 +1,19 @@
+@import '../../scss/mixins';
+@import '../../scss/colors';
+
+.footer-component {
+    margin-top: 50px;
+    padding: 15px 0 0;
+    text-align: center;
+    border-top: 1px solid $brand-black-faded-2;
+
+    .link {
+        cursor: pointer;
+        color: $brand-blue;
+        text-decoration: none;
+
+        &:hover {
+            color: $brand-blue-lighter;
+        }
+    }
+}

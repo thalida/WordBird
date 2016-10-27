@@ -15,7 +15,8 @@ console.log('DIST', DIST);
 module.exports = {
 	context: APP,
 	entry: {
-		app: './'
+		popup: './popup.index.js',
+		options: './options.index.js'
 	},
 	output: {
 		path: DIST,
@@ -63,8 +64,16 @@ module.exports = {
     plugins: [
 		new ExtractTextPlugin("[name].[hash].css", {allChunks: true}),
         new HtmlWebpackPlugin({
+			chunks: ['options'],
             template: APP + '/index.html',
-            inject: true
+			filename: 'options.html',
+            inject: true,
+        }),
+        new HtmlWebpackPlugin({
+			chunks: ['popup'],
+            template: APP + '/index.html',
+			filename: 'popup.html',
+            inject: true,
         }),
 		new CleanWebpackPlugin(['dist'], {
 			root: path.join(__dirname, '/extension/public/'),

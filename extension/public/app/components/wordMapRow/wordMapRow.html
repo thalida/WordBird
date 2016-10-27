@@ -12,10 +12,9 @@
 			ng-trim="false"
 			placeholder="Find word..."
 			required />
-
-		<span class="formInput-error">
-			<span ng-show="!$ctrl.word.isValid && $ctrl.form.word.$dirty && $ctrl.form.word.$error.required">Required</span>
-			<span ng-show="!$ctrl.word.isValid && $ctrl.form.word.$dirty && $ctrl.form.word.$error.pattern">Enter one word only</span>
+		<span class="formInput-error" ng-show="!$ctrl.word.isValid && $ctrl.form.word.$dirty">
+			<span ng-show="$ctrl.form.word.$error.required">Required</span>
+			<span ng-show="$ctrl.form.word.$error.pattern">Enter one word only</span>
 		</span>
 	</div>
 
@@ -33,6 +32,12 @@
 			placeholder="Replace with..."
 			ng-trim="false"
 			required />
+
+		<span class="formInput-help"
+			  ng-if="$ctrl.isCreatorRow"
+			  ng-hide="!$ctrl.word.isValid && $ctrl.form.word.$dirty">
+			Press <strong>enter</strong> to save
+		</span>
 
 		<span class="formInput-error">
 			<span ng-show="!$ctrl.replacer.isValid && $ctrl.form.replacer.$dirty && $ctrl.form.replacer.$error.required">Required</span>

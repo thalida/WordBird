@@ -28,7 +28,5 @@ module.exports = {
 
 			return $ctrl.map;
 		};
-
-		console.log( $ctrl.map )
 	}
 };

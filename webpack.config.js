@@ -5,6 +5,7 @@ var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var CopyWebpackPlugin = require("copy-webpack-plugin");
+var CleanWebpackPlugin = require('clean-webpack-plugin');
 
 var APP =  path.join(__dirname, '/extension/public/app');
 var DIST =  path.join(__dirname, '/extension/public/dist');
@@ -64,6 +65,11 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: APP + '/index.html',
             inject: true
-        })
+        }),
+		new CleanWebpackPlugin(['dist'], {
+			root: path.join(__dirname, '/extension/public/'),
+			verbose: true,
+			dry: false
+		})
     ]
 };

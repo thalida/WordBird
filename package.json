@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/thalida/WordBird#readme",
   "devDependencies": {
+    "clean-webpack-plugin": "^0.1.13",
     "copy-webpack-plugin": "^4.0.0",
     "css-loader": "^0.25.0",
     "expose-loader": "^0.7.1",

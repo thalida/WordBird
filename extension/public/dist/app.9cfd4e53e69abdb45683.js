@@ -60,8 +60,8 @@
 	__webpack_require__(8);
 	__webpack_require__(9);
 
-	__webpack_require__(40);
 	__webpack_require__(22);
+	__webpack_require__(28);
 	__webpack_require__(46);
 
 	// Bootstrap Angular App
@@ -60840,10 +60840,8 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./blacklist/index.js": 24,
-		"./header/index.js": 27,
-		"./wordMap/index.js": 32,
-		"./wordMapRow/index.js": 36
+		"./storageCollection/index.js": 24,
+		"./storageItem/index.js": 26
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -60865,15 +60863,179 @@
 
 	'use strict';
 
-	__webpack_require__(25);
-
 	angular
 	    .module('app')
-	    .component('blacklist', __webpack_require__(26));
+	    .service('StorageCollection', __webpack_require__(25));
 
 
 /***/ },
 /* 25 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = ["StorageItem", function( StorageItem ){
+		"ngInject";
+
+		var StorageCollection = function(){
+			this.items = {};
+			chrome.storage.onChanged.addListener( this.onChange.bind(this) );
+		};
+
+		StorageCollection.prototype = {
+			add: function( opts ){
+				console.log( opts );
+				this.items[opts.key] = new StorageItem( opts.key, opts.defaultTo, opts.onChange );
+				return this.get( opts.key );
+			},
+
+			get: function( key ){
+				return this.items[key].get();
+			},
+
+			set: function( key, value ){
+				return this.items[key].set(value);
+			},
+
+			onChange: function(changes, namespace) {
+				angular.forEach(changes, function(key, changedItem){
+					var storageItem = this.items[key];
+
+					if( typeof storageItem === 'undefined' ){
+						return true;
+					}
+
+					var onChangeCB = storageItem.onChange;
+
+					if( typeof onChangeCB !== 'function'){
+						return true;
+					}
+
+					onChangeCB( changedItem.newValue, changedItem.oldValue );
+				}.bind(this));
+			}
+		};
+
+		return StorageCollection;
+	}]
+
+
+/***/ },
+/* 26 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	angular
+	    .module('app')
+	    .service('StorageItem', __webpack_require__(27));
+
+
+/***/ },
+/* 27 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = ["$q", function( $q ){
+	    "ngInject";
+
+		var StorageItem = function( key, defaultVal, onChangeCB ){
+			var self = this;
+
+			this.key = key;
+
+			this.onChange = onChangeCB || function(){};
+
+			this.get().then(function( data ){
+				if( typeof data === 'undefined' ){
+					this.set( defaultVal );
+					this.onChange( defaultVal );
+				} else {
+					this.onChange( data );
+				}
+			}.bind(this));
+		};
+
+		StorageItem.prototype = {
+			get: function( cb ){
+				var key = this.key;
+				return $q(function(resolve, reject){
+					chrome.storage.sync.get(key, function( data ){
+						resolve( data[key] );
+					});
+				});
+			},
+
+			set: function( value, cb ){
+				var key = this.key;
+				var storage = {};
+				storage[key] = value;
+
+				return $q(function(resolve, reject){
+					chrome.storage.sync.set(storage, function( data ){
+						if( chrome.runtime.lastError ){
+							reject( chrome.runtime.lastError );
+						} else {
+							resolve();
+						}
+					});
+				});
+			}
+		};
+
+		return StorageItem;
+	}]
+
+
+/***/ },
+/* 28 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {// Requires all of the index.js files for the components in this directory
+	global.requireUtils.requireAll( __webpack_require__(29) );
+
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
+/* 29 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var map = {
+		"./blacklist/index.js": 30,
+		"./header/index.js": 33,
+		"./wordMap/index.js": 38,
+		"./wordMapRow/index.js": 42
+	};
+	function webpackContext(req) {
+		return __webpack_require__(webpackContextResolve(req));
+	};
+	function webpackContextResolve(req) {
+		return map[req] || (function() { throw new Error("Cannot find module '" + req + "'.") }());
+	};
+	webpackContext.keys = function webpackContextKeys() {
+		return Object.keys(map);
+	};
+	webpackContext.resolve = webpackContextResolve;
+	module.exports = webpackContext;
+	webpackContext.id = 29;
+
+
+/***/ },
+/* 30 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	__webpack_require__(31);
+
+	angular
+	    .module('app')
+	    .component('blacklist', __webpack_require__(32));
+
+
+/***/ },
+/* 31 */
 /***/ function(module, exports) {
 
 	var path = 'components/blacklist/blacklist.html';
@@ -60882,7 +61044,7 @@
 	module.exports = path;
 
 /***/ },
-/* 26 */
+/* 32 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -60938,42 +61100,42 @@
 
 
 /***/ },
-/* 27 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	__webpack_require__(28);
-	__webpack_require__(29);
+	__webpack_require__(34);
+	__webpack_require__(35);
 
 	angular
 	    .module('app')
-	    .component('header', __webpack_require__(31));
+	    .component('header', __webpack_require__(37));
 
 
 /***/ },
-/* 28 */
+/* 34 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 29 */
+/* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var path = 'components/header/header.html';
-	var html = "<div class=\"header-component\">\n    <div class=\"logo\"><img class=\"logo-img\" src=\"" + __webpack_require__(30) + "\" /></div>\n    <div class=\"name\">\n        <span class=\"weight-thin\">WordBird</span> <span class=\"weight-regular\">Settings</span>\n    </div>\n</div>\n";
+	var html = "<div class=\"header-component\">\n    <div class=\"logo\"><img class=\"logo-img\" src=\"" + __webpack_require__(36) + "\" /></div>\n    <div class=\"name\">\n        <span class=\"weight-thin\">WordBird</span> <span class=\"weight-regular\">Settings</span>\n    </div>\n</div>\n";
 	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
 	module.exports = path;
 
 /***/ },
-/* 30 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "2f21111646f71ac2d3db27ef2055aa39.svg";
 
 /***/ },
-/* 31 */
+/* 37 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -60986,27 +61148,27 @@
 
 
 /***/ },
-/* 32 */
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	__webpack_require__(33);
-	__webpack_require__(34);
+	__webpack_require__(39);
+	__webpack_require__(40);
 
 	angular
 	    .module('app')
-	    .component('wordMap', __webpack_require__(35));
+	    .component('wordMap', __webpack_require__(41));
 
 
 /***/ },
-/* 33 */
+/* 39 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 34 */
+/* 40 */
 /***/ function(module, exports) {
 
 	var path = 'components/wordMap/wordMap.html';
@@ -61015,7 +61177,7 @@
 	module.exports = path;
 
 /***/ },
-/* 35 */
+/* 41 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -61023,12 +61185,12 @@
 	module.exports = {
 		templateUrl: 'components/wordMap/wordMap.html',
 		bindings: {
-			map: '=',
+			map: '<',
 			changeCB: '&onChange'
 		},
 		controller: function (){
 			var $ctrl = this;
-			
+
 			if( typeof $ctrl.map !== 'object' ){
 				$ctrl.map = {};
 			}
@@ -61048,31 +61210,33 @@
 
 				return $ctrl.map;
 			};
+
+			console.log( $ctrl.map )
 		}
 	};
 
 
 /***/ },
-/* 36 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	__webpack_require__(37);
-	__webpack_require__(38);
+	__webpack_require__(43);
+	__webpack_require__(44);
 
 	angular
 	    .module('app')
-	    .component('wordMapRow', __webpack_require__(39));
+	    .component('wordMapRow', __webpack_require__(45));
 
 
 /***/ },
-/* 37 */
+/* 43 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 38 */
+/* 44 */
 /***/ function(module, exports) {
 
 	var path = 'components/wordMapRow/wordMapRow.html';
@@ -61081,7 +61245,7 @@
 	module.exports = path;
 
 /***/ },
-/* 39 */
+/* 45 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -61152,168 +61316,6 @@
 
 
 /***/ },
-/* 40 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(global) {// Requires all of the index.js files for the components in this directory
-	global.requireUtils.requireAll( __webpack_require__(41) );
-
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
-
-/***/ },
-/* 41 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var map = {
-		"./storageCollection/index.js": 42,
-		"./storageItem/index.js": 44
-	};
-	function webpackContext(req) {
-		return __webpack_require__(webpackContextResolve(req));
-	};
-	function webpackContextResolve(req) {
-		return map[req] || (function() { throw new Error("Cannot find module '" + req + "'.") }());
-	};
-	webpackContext.keys = function webpackContextKeys() {
-		return Object.keys(map);
-	};
-	webpackContext.resolve = webpackContextResolve;
-	module.exports = webpackContext;
-	webpackContext.id = 41;
-
-
-/***/ },
-/* 42 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	angular
-	    .module('app')
-	    .service('StorageCollection', __webpack_require__(43));
-
-
-/***/ },
-/* 43 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	module.exports = ["StorageItem", function( StorageItem ){
-		"ngInject";
-
-		var StorageCollection = function(){
-			this.items = {};
-			chrome.storage.onChanged.addListener( this.onChange.bind(this) );
-		};
-
-		StorageCollection.prototype = {
-			add: function( opts ){
-				console.log( opts );
-				this.items[opts.key] = new StorageItem( opts.key, opts.defaultTo, opts.onChange );
-				return this.get( opts.key );
-			},
-
-			get: function( key ){
-				return this.items[key].get();
-			},
-
-			set: function( key, value ){
-				return this.items[key].set(value);
-			},
-
-			onChange: function(changes, namespace) {
-				angular.forEach(changes, function(key, changedItem){
-					var storageItem = this.items[key];
-
-					if( typeof storageItem === 'undefined' ){
-						return true;
-					}
-
-					var onChangeCB = storageItem.onChange;
-
-					if( typeof onChangeCB !== 'function'){
-						return true;
-					}
-
-					onChangeCB( changedItem.newValue, changedItem.oldValue );
-				}.bind(this));
-			}
-		};
-
-		return StorageCollection;
-	}]
-
-
-/***/ },
-/* 44 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	angular
-	    .module('app')
-	    .service('StorageItem', __webpack_require__(45));
-
-
-/***/ },
-/* 45 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	module.exports = ["$q", function( $q ){
-	    "ngInject";
-
-		var StorageItem = function( key, defaultVal, onChangeCB ){
-			var self = this;
-
-			this.key = key;
-
-			this.onChange = onChangeCB || function(){};
-
-			this.get().then(function( data ){
-				if( typeof data === 'undefined' ){
-					this.set( defaultVal );
-					this.onChange( defaultVal );
-				} else {
-					this.onChange( data );
-				}
-			}.bind(this));
-		};
-
-		StorageItem.prototype = {
-			get: function( cb ){
-				var key = this.key;
-				return $q(function(resolve, reject){
-					chrome.storage.sync.get(key, function( data ){
-						resolve( data[key] );
-					});
-				});
-			},
-
-			set: function( value, cb ){
-				var key = this.key;
-				var storage = {};
-				storage[key] = value;
-
-				return $q(function(resolve, reject){
-					chrome.storage.sync.set(storage, function( data ){
-						if( chrome.runtime.lastError ){
-							reject( chrome.runtime.lastError );
-						} else {
-							resolve();
-						}
-					});
-				});
-			}
-		};
-
-		return StorageItem;
-	}]
-
-
-/***/ },
 /* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -61368,7 +61370,7 @@
 /***/ function(module, exports) {
 
 	var path = 'views/main/main.html';
-	var html = "<div class=\"main-view\">\n    <word-map map=\"wordMap\" on-change=\"onMapUpdate(res)\"></word-map>\n    <blacklist list=\"blacklist\" on-change=\"onBlacklistUpdate(res)\"></blacklist>\n</div>\n";
+	var html = "<div class=\"main-view\">\n    <word-map map=\"$ctrl.wordMap\" on-change=\"$ctrl.onMapUpdate(res)\"></word-map>\n    <blacklist list=\"$ctrl.blacklist\" on-change=\"$ctrl.onBlacklistUpdate(res)\"></blacklist>\n</div>\n";
 	window.angular.module('ng').run(['$templateCache', function(c) { c.put(path, html) }]);
 	module.exports = path;
 

@@ -14,8 +14,9 @@ global.requireUtils = require('../_helpers/require-utils.js');
 require('./app.scss');
 require('./app.module.js');
 
-require('./components');
 require('./services');
+require('./components');
+require('./views');
 
 // Bootstrap Angular App
 var appScope = angular.element(document.querySelectorAll('.app')).scope()

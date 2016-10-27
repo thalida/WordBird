@@ -3,7 +3,7 @@
 
 	"name": "WordBird",
 	"description": "Change from Word to Word",
-	"version": "0.1",
+	"version": "1.0.0",
 
 	"permissions": [
 		"storage"

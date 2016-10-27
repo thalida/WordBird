@@ -2,6 +2,8 @@
 @import '../../scss/colors';
 
 .word_map_row-component {
+    margin-top: 15px;
+    
     &-row {
 		@include clearfix;
 	}

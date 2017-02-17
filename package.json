@@ -4,7 +4,9 @@
   "description": "Simple chrome extension to change words  and phrases.",
   "main": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "rm -rf extension/public/dist",
+    "prebuild": "npm run clean",
+    "build": "NODE_ENV=production webpack -p --progress --colors"
   },
   "repository": {
     "type": "git",

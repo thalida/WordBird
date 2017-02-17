@@ -75,7 +75,7 @@ StringReplacer.prototype = {
 		return origNodeValue.replace(this.regex, function( matchedStr, foundStr ){
 			this.touchedNodes.push({node: node, origValue: origNodeValue});
 
-			var replacementStr = wordMap[foundStr.toLowerCase()];
+			var replacementStr = wordMap[foundStr.toLowerCase()].replace;
 			var result = matchedStr.replace(foundStr, replacementStr);
 
 			if( matchedStr.charAt(0) === matchedStr.charAt(0).toUpperCase() ){

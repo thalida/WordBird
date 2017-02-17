@@ -20,9 +20,9 @@ module.exports = function( StorageCollection, isPopup ){
     storage.add({
         key: 'wordMap',
         defaultTo: {
-            'word': 'bird',
-            'cloud': 'butt',
-            'google': 'Our Benevolent Lord and Master'
+            'word': {key: 'word', find: 'word', replace: 'bird'},
+            'cloud': {key: 'cloud', find: 'cloud', replace: 'butt'},
+            'google': {key: 'google', find: 'google', replace: 'Our Benevolent Lord and Master'}
         },
         onChange: function( wordMap ){
             $ctrl.wordMap = wordMap;
@@ -46,7 +46,6 @@ module.exports = function( StorageCollection, isPopup ){
     };
 
     $ctrl.onBlacklistUpdate = function( list ){
-        console.log( list );
         storage.set('blacklist', list.newVal);
     };
 };

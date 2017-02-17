@@ -21,7 +21,11 @@ module.exports = {
 			}
 
 			if( typeof actions.add === 'object' ){
-				$ctrl.map[actions.add.key] = actions.add.value;
+				$ctrl.map[actions.add.key.toLowerCase()] = {
+					key: actions.add.key.toLowerCase(),
+					find: actions.add.key,
+					replace: actions.add.value
+				};
 			}
 
 			$ctrl.changeCB({res: {newVal: $ctrl.map, oldVal: oldMap }});

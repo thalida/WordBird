@@ -1,7 +1,7 @@
 <div class="word_map-component">
 	<h1>Active Words</h1>
 	<word-map:row creator on-change="$ctrl.onChange( actions )"></word-map:row>
-	<div class="word_map-component-list" ng-repeat="(word, replacer) in $ctrl.map">
-		<word-map:row word="{{word}}" replacer="{{replacer}}" on-change="$ctrl.onChange( actions )"></word-map:row>
+	<div class="word_map-component-list" ng-repeat="(key, map) in $ctrl.map">
+		<word-map:row word="{{map.find}}" replacer="{{map.replace}}" on-change="$ctrl.onChange( actions )"></word-map:row>
 	</div>
 </div>

@@ -4,6 +4,7 @@ module.exports = {
 	require: '^wordMap',
 	templateUrl: 'components/wordMapRow/wordMapRow.html',
 	bindings: {
+		origKey: '@?key',
 		origWord: '@?word',
 		origReplacer: '@?replacer',
 		updateMap: '&onChange'
@@ -36,7 +37,7 @@ module.exports = {
 			var actions = { add: { key: $ctrl.word.val, value: $ctrl.replacer.val } };
 
 			if( inputName === 'word' ){
-				actions.remove = {key: $ctrl.origWord};
+				actions.remove = {key: $ctrl.origKey};
 			}
 
 			$ctrl.updateMap({actions: actions});
@@ -50,7 +51,7 @@ module.exports = {
 		};
 
 		$ctrl.remove = function(){
-			$ctrl.updateMap({ actions: {remove: {key: $ctrl.origWord}} });
+			$ctrl.updateMap({ actions: {remove: {key: $ctrl.origKey}} });
 		};
 
 		$ctrl.onEvent = function( e ){

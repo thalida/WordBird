@@ -37,6 +37,30 @@ module.exports = function( StorageCollection, isPopup ){
         }
     });
 
+    storage.get('wordMap').then(function (map) {
+        var isUpdated = false;
+        var newMap = {};
+
+        for (var key in map) {
+            if (map.hasOwnProperty(key)) {
+                var value = map[key];
+
+                if (typeof value === 'string') {
+                    isUpdated = true;
+                    newMap[key.toLowerCase()] = {
+                        key: key.toLowerCase(),
+                        find: key,
+                        value: value,
+                    };
+                }
+            }
+        }
+
+        if (isUpdated) {
+            storage.set('wordMap', newMap);
+        }
+    });
+
     $ctrl.onToggleUpdate = function( toggle ){
         storage.set('isEnabled', toggle.newVal);
     };

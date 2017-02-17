@@ -6,7 +6,8 @@
   "scripts": {
     "clean": "rm -rf extension/public/dist",
     "prebuild": "npm run clean",
-    "build": "NODE_ENV=production webpack -p --progress --colors"
+    "build": "NODE_ENV=production webpack -p --progress --colors",
+    "start": "webpack --watch --progress --colors"
   },
   "repository": {
     "type": "git",

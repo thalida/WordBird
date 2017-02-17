@@ -4,7 +4,6 @@
 	"name": "WordBird",
 	"description": "Find and Replace Words on Websites.",
 	"version": "1.0.0",
-	"default_locale": "en",
 	"author": "thalida",
 	"homepage_url": "https://github.com/thalida/WordBird",
 

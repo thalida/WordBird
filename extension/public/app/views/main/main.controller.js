@@ -39,7 +39,6 @@ module.exports = function( StorageCollection, isPopup ){
     });
 
     storage.get('wordMap').then(function (map) {
-        var isUpdated = false;
         var newMap = {};
 
         for (var key in map) {
@@ -47,24 +46,23 @@ module.exports = function( StorageCollection, isPopup ){
                 var value = map[key];
 
                 if (typeof value === 'string') {
-                    isUpdated = true;
                     newMap[key.toLowerCase()] = {
                         key: key.toLowerCase(),
                         find: key,
                         replace: value,
                     };
-                }
-
-                if (typeof value === 'object' && typeof value.value === 'string') {
-                    newMap[key.toLowerCase()].replace = value;
+                } else if (typeof value === 'object' && typeof value.value === 'string') {
+                    newMap[key.toLowerCase()] = value;
+                    newMap[key.toLowerCase()].replace = value.value;
+                    delete newMap[key.toLowerCase()].value;
+                } else {
+                    newMap[key.toLowerCase()] = value;
                 }
             }
         }
 
-        if (isUpdated) {
-            storage.set('wordMap', newMap);
-        }
-
+        storage.set('wordMap', newMap);
+        $ctrl.wordMap = newMap;
         $ctrl.isLoaded = true;
     });
 

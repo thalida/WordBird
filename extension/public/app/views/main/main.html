@@ -1,6 +1,6 @@
 <header ng-if="$ctrl.isPopup === false"></header>
 
-<div class="main-view">
+<div class="main-view" ng-if="$ctrl.isLoaded === true">
     <toggle state="$ctrl.isEnabled" on-label="on" off-label="off" on-change="$ctrl.onToggleUpdate(res)"></toggle>
 
     <word-map map="$ctrl.wordMap" on-change="$ctrl.onMapUpdate(res)"></word-map>

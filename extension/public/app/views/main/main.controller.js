@@ -8,6 +8,7 @@ module.exports = function( StorageCollection, isPopup ){
     var storage = new StorageCollection();
 
     $ctrl.isPopup = isPopup;
+    $ctrl.isLoaded = false;
 
     storage.add({
         key: 'isEnabled',
@@ -50,8 +51,12 @@ module.exports = function( StorageCollection, isPopup ){
                     newMap[key.toLowerCase()] = {
                         key: key.toLowerCase(),
                         find: key,
-                        value: value,
+                        replace: value,
                     };
+                }
+
+                if (typeof value === 'object' && typeof value.value === 'string') {
+                    newMap[key.toLowerCase()].replace = value;
                 }
             }
         }
@@ -59,6 +64,8 @@ module.exports = function( StorageCollection, isPopup ){
         if (isUpdated) {
             storage.set('wordMap', newMap);
         }
+
+        $ctrl.isLoaded = true;
     });
 
     $ctrl.onToggleUpdate = function( toggle ){
